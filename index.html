@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HealthFit24x7 — your AI companion for health, wellbeing & support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-1: #EEF1FC;
+    --bg-2: #F3ECFB;
+    --bg-3: #E9FBF6;
+    --ink: #191B2A;
+    --ink-soft: #565B78;
+    --ink-faint: #8B90AC;
+    --glass: rgba(255,255,255,0.6);
+    --glass-strong: rgba(255,255,255,0.82);
+    --glass-weak: rgba(255,255,255,0.4);
+    --glass-border: rgba(255,255,255,0.7);
+    --line: rgba(120,110,180,0.16);
+    --line-soft: rgba(120,110,180,0.1);
+    --accent-1: #7C5CFC;
+    --accent-2: #22C7EE;
+    --accent-3: #F45CC0;
+    --accent-4: #34E7B0;
+    --accent-grad: linear-gradient(135deg, #7C5CFC 0%, #22C7EE 100%);
+    --accent-grad-2: linear-gradient(135deg, #F45CC0 0%, #7C5CFC 100%);
+    --gold: #C2842E;
+    --gold-soft: rgba(194,132,46,0.14);
+    --rust: #E1543A;
+    --rust-soft: rgba(225,84,58,0.12);
+    --user-bubble: linear-gradient(135deg, #7C5CFC 0%, #22C7EE 100%);
+    --user-text: #FFFFFF;
+    --bot-bubble: var(--glass-strong);
+    --radius-xs: 9px;
+    --radius-sm: 14px;
+    --radius: 20px;
+    --radius-lg: 26px;
+    --shadow: 0 2px 10px rgba(90,80,170,0.10);
+    --shadow-md: 0 10px 28px -8px rgba(90,80,170,0.22);
+    --shadow-lg: 0 30px 70px -20px rgba(90,80,170,0.32);
+    --glow-1: 0 0 0 rgba(124,92,252,0);
+    --glow-btn: 0 6px 20px -4px rgba(124,92,252,0.55), 0 2px 8px rgba(34,199,238,0.30);
+    --glow-btn-hover: 0 10px 32px -4px rgba(124,92,252,0.65), 0 4px 14px rgba(34,199,238,0.4);
+    --ring: 0 0 0 3px rgba(124,92,252,0.28);
+    --ease: cubic-bezier(.4,0,.2,1);
+    --blur: blur(22px);
+  }
+  [data-theme="dark"]{
+    --bg-1: #0B0E1C;
+    --bg-2: #120B22;
+    --bg-3: #081A1C;
+    --ink: #EAEBFF;
+    --ink-soft: #A6ABD1;
+    --ink-faint: #6C7197;
+    --glass: rgba(255,255,255,0.055);
+    --glass-strong: rgba(255,255,255,0.075);
+    --glass-weak: rgba(255,255,255,0.035);
+    --glass-border: rgba(255,255,255,0.14);
+    --line: rgba(255,255,255,0.12);
+    --line-soft: rgba(255,255,255,0.07);
+    --accent-1: #8B6BFF;
+    --accent-2: #2DE1FF;
+    --accent-3: #FF6FD8;
+    --accent-4: #3CF2B6;
+    --accent-grad: linear-gradient(135deg, #8B6BFF 0%, #2DE1FF 100%);
+    --accent-grad-2: linear-gradient(135deg, #FF6FD8 0%, #8B6BFF 100%);
+    --gold: #F0BB63;
+    --gold-soft: rgba(240,187,99,0.14);
+    --rust: #FF8266;
+    --rust-soft: rgba(255,130,102,0.14);
+    --user-bubble: linear-gradient(135deg, #8B6BFF 0%, #2DE1FF 100%);
+    --user-text: #0B0E1C;
+    --bot-bubble: var(--glass-strong);
+    --shadow: 0 2px 12px rgba(0,0,0,0.35);
+    --shadow-md: 0 14px 36px -10px rgba(0,0,0,0.55);
+    --shadow-lg: 0 40px 90px -24px rgba(0,0,0,0.7);
+    --glow-btn: 0 0 22px -2px rgba(139,107,255,0.75), 0 0 34px -6px rgba(45,225,255,0.5);
+    --glow-btn-hover: 0 0 30px 0px rgba(139,107,255,0.9), 0 0 46px -4px rgba(45,225,255,0.65);
+    --ring: 0 0 0 3px rgba(139,107,255,0.35);
+  }
+  *{ box-sizing: border-box; }
+  ::selection{ background: rgba(124,92,252,0.3); color: var(--ink); }
+  html,body{ height:100%; margin:0; }
+  html{ height:100%; }
+  body{
+    background: var(--bg-1);
+    background-image:
+      radial-gradient(60% 50% at 15% 10%, color-mix(in srgb, var(--accent-1) 22%, transparent), transparent 60%),
+      radial-gradient(55% 45% at 90% 15%, color-mix(in srgb, var(--accent-2) 20%, transparent), transparent 60%),
+      radial-gradient(60% 55% at 50% 100%, color-mix(in srgb, var(--accent-3) 16%, transparent), transparent 60%),
+      linear-gradient(180deg, var(--bg-1), var(--bg-2) 55%, var(--bg-3));
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color .3s var(--ease), color .3s var(--ease);
+    display:flex; justify-content:center;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  /* ---------------- animated background orbs ---------------- */
+  .bg-orb{ position: fixed; border-radius: 50%; filter: blur(70px); pointer-events:none; z-index:0; opacity:.55; will-change: transform; }
+  .bg-orb-1{ width: 420px; height: 420px; top: -120px; left: -100px; background: var(--accent-1); animation: orbFloat1 22s ease-in-out infinite; }
+  .bg-orb-2{ width: 380px; height: 380px; top: 30%; right: -140px; background: var(--accent-2); animation: orbFloat2 26s ease-in-out infinite; }
+  .bg-orb-3{ width: 340px; height: 340px; bottom: -140px; left: 20%; background: var(--accent-3); animation: orbFloat3 30s ease-in-out infinite; }
+  [data-theme="dark"] .bg-orb{ opacity:.4; }
+  @keyframes orbFloat1{ 0%,100%{ transform: translate(0,0) scale(1); } 50%{ transform: translate(60px,80px) scale(1.15); } }
+  @keyframes orbFloat2{ 0%,100%{ transform: translate(0,0) scale(1); } 50%{ transform: translate(-70px,50px) scale(1.1); } }
+  @keyframes orbFloat3{ 0%,100%{ transform: translate(0,0) scale(1); } 50%{ transform: translate(40px,-60px) scale(1.2); } }
+
+  .layout{ display:flex; width:100vw; max-width: none; height: 100vh; align-items:stretch; position:relative; gap: 0; z-index:1; }
+  .app{
+    width:100%; max-width: none; flex:1; display:flex; flex-direction:column;
+    height: 100vh; min-height: 100vh; margin: 0;
+    background: var(--glass);
+    backdrop-filter: var(--blur) saturate(160%);
+    -webkit-backdrop-filter: var(--blur) saturate(160%);
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 22px 26px 18px 26px;
+    position: relative;
+    overflow: hidden;
+    transition: background .3s var(--ease), border-color .3s var(--ease);
+  }
+  .app::before{
+    content:"";
+    position:absolute; top:0; left:0; right:0; height:3px;
+    background: var(--accent-grad);
+    box-shadow: 0 0 16px 0 color-mix(in srgb, var(--accent-1) 60%, transparent);
+  }
+
+  /* ---------------- header ---------------- */
+  header{ display:flex; align-items:flex-start; justify-content:space-between; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  header h1{
+    font-family:'Fraunces', serif; font-weight: 560; font-size: 1.5rem; margin: 0 0 3px 0;
+    color: var(--ink); letter-spacing: -0.015em; display:flex; align-items:center; gap:10px;
+  }
+  .brand-mark{
+    width: 32px; height:32px; border-radius: 10px; flex-shrink:0;
+    background: var(--accent-grad);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-1) 18%, transparent), var(--glow-btn);
+    animation: brandPulse 3.2s ease-in-out infinite;
+  }
+  @keyframes brandPulse{
+    0%,100%{ box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-1) 18%, transparent), 0 0 14px -2px color-mix(in srgb, var(--accent-2) 60%, transparent); }
+    50%{ box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent-1) 10%, transparent), 0 0 26px 2px color-mix(in srgb, var(--accent-2) 75%, transparent); }
+  }
+  .brand-mark svg{ width:17px; height:17px; stroke:#fff; }
+  header p{ margin:0; color: var(--ink-soft); font-size: 0.85rem; max-width: 36ch; line-height:1.45; }
+  .toolbar{ display:flex; align-items:center; gap:9px; padding-top:3px; flex-shrink:0; flex-wrap: wrap; }
+  .icon-btn{
+    width: 37px; height:37px; border-radius:50%; border: 1px solid var(--glass-border); background: var(--glass-weak);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; color: var(--ink);
+    backdrop-filter: blur(8px);
+    transition: background .18s var(--ease), border-color .18s var(--ease), transform .12s var(--ease), box-shadow .2s var(--ease);
+  }
+  .icon-btn:hover{ border-color: color-mix(in srgb, var(--accent-1) 55%, var(--glass-border)); background: var(--glass); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-1) 12%, transparent); transform: translateY(-1px); }
+  .icon-btn:active{ transform: scale(0.92); }
+  .icon-btn:focus-visible{ outline:none; box-shadow: var(--ring); }
+  .icon-btn svg{ width:17px; height:17px; }
+  .voice-toggle{ display:flex; align-items:center; gap:7px; font-size: 0.76rem; color: var(--ink-soft); white-space: nowrap; font-weight:500; }
+  .switch{ position:relative; width:34px; height:19px; flex-shrink:0; }
+  .switch input{ opacity:0; width:0; height:0; }
+  .slider{ position:absolute; inset:0; background: var(--glass-weak); border-radius: 20px; cursor:pointer; transition: background .2s var(--ease), box-shadow .2s var(--ease); border: 1px solid var(--glass-border); }
+  .slider::before{ content:""; position:absolute; width:13px; height:13px; left:2px; top:2px; background:#fff; border-radius:50%; transition: transform .2s var(--ease); box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+  input:checked + .slider{ background: var(--accent-grad); border-color: transparent; box-shadow: var(--glow-btn); }
+  input:checked + .slider::before{ transform: translateX(15px); }
+  .lang-toggle{ display:flex; border: 1px solid var(--glass-border); border-radius: 999px; overflow:hidden; background: var(--glass-weak); backdrop-filter: blur(8px); }
+  .lang-btn{ border:none; background: transparent; color: var(--ink-soft); font-family: inherit; font-size: 0.72rem; font-weight:600; padding: 7px 12px; cursor:pointer; letter-spacing:.02em; transition: background .15s var(--ease), color .15s var(--ease); }
+  .lang-btn.active{ background: var(--accent-grad); color: #fff; box-shadow: var(--glow-btn); }
+  .lang-btn:not(.active):hover{ color: var(--ink); }
+
+  /* ---------------- tabs ---------------- */
+  .tabs{ display:flex; gap:4px; padding: 14px 0; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .tab-btn{
+    font-family: inherit; font-size: 0.83rem; font-weight:500; padding: 8px 14px; border-radius: 999px;
+    border: 1px solid transparent; background: transparent; color: var(--ink-soft); cursor:pointer;
+    transition: background .16s var(--ease), color .16s var(--ease), box-shadow .16s var(--ease), transform .12s var(--ease);
+  }
+  .tab-btn.active{ background: var(--accent-grad); color: #fff; font-weight:600; box-shadow: var(--glow-btn); }
+  .tab-btn:hover:not(.active){ color: var(--ink); background: var(--glass); }
+  .tab-btn:active{ transform: scale(0.97); }
+  .tab-btn:focus-visible{ outline:none; box-shadow: var(--ring); }
+  .tab-panel{ display:none; flex:1; min-height:0; flex-direction:column; overflow-y:auto; }
+  .tab-panel.active{ display:flex; animation: panelIn .32s var(--ease); }
+  @keyframes panelIn{ from{ opacity:0; transform: translateY(8px) scale(.995); } to{ opacity:1; transform: translateY(0) scale(1); } }
+
+  /* ---------------- chat ---------------- */
+  .chips{ display:flex; gap:8px; flex-wrap:wrap; padding: 14px 0 4px 0; flex-shrink:0; }
+  .chip{
+    border: 1px solid var(--glass-border); background: var(--glass-weak); color: var(--ink); font-size: 0.78rem; font-weight:500;
+    padding: 7px 13px; border-radius: 999px; cursor:pointer; font-family: inherit; backdrop-filter: blur(6px);
+    transition: border-color .16s var(--ease), background .16s var(--ease), transform .12s var(--ease), box-shadow .16s var(--ease);
+  }
+  .chip:hover{ border-color: color-mix(in srgb, var(--accent-1) 50%, var(--glass-border)); background: var(--glass); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-1) 10%, transparent); transform: translateY(-1px); }
+  .chip:active{ transform: translateY(0); }
+  .chat-window{ flex:1; overflow-y:auto; padding: 16px 4px; display:flex; flex-direction:column; gap: 14px; min-height: 200px; scroll-behavior:smooth; }
+  .chat-window::-webkit-scrollbar{ width:6px; }
+  .chat-window::-webkit-scrollbar-thumb{ background: var(--line); border-radius:4px; }
+  .chat-window::-webkit-scrollbar-thumb:hover{ background: var(--accent-1); }
+  .row{ display:flex; align-items:flex-end; gap:8px; animation: rise .3s var(--ease); }
+  @keyframes rise{ from{ opacity:0; transform: translateY(8px); } to{ opacity:1; transform: translateY(0); } }
+  .row.user{ justify-content:flex-end; }
+  .row.bot{ justify-content:flex-start; }
+  .row.bot::before{
+    content:"";
+    width: 26px; height:26px; border-radius:50%; flex-shrink:0;
+    background: var(--accent-grad);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-1) 16%, transparent);
+    animation: avatarPulse 2.6s ease-in-out infinite;
+  }
+  @keyframes avatarPulse{
+    0%,100%{ box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-1) 16%, transparent); }
+    50%{ box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent-2) 22%, transparent); }
+  }
+  .bubble{
+    max-width: 78%; padding: 11px 15px; border-radius: var(--radius); font-size: 0.93rem; line-height: 1.55;
+    white-space: pre-wrap; box-shadow: var(--shadow);
+  }
+  .row.user .bubble{ background: var(--user-bubble); color: var(--user-text); border-bottom-right-radius: 5px; box-shadow: var(--glow-btn); }
+  .row.bot .bubble{ background: var(--bot-bubble); backdrop-filter: blur(14px); border: 1px solid var(--glass-border); color: var(--ink); border-bottom-left-radius: 5px; }
+  .row.bot .bubble.crisis{ border-left: 3px solid var(--rust); background: var(--rust-soft); }
+  .typing{ display:flex; gap:5px; align-items:center; padding: 5px 3px; }
+  .typing span{ width:6px; height:6px; border-radius:50%; background: var(--accent-grad); box-shadow: 0 0 8px 0 color-mix(in srgb, var(--accent-2) 70%, transparent); animation: bounce 1.1s infinite ease-in-out; }
+  .typing span:nth-child(2){ animation-delay: .15s; }
+  .typing span:nth-child(3){ animation-delay: .3s; }
+  @keyframes bounce{ 0%,60%,100%{ transform: translateY(0); opacity:.5; } 30%{ transform: translateY(-4px); opacity:1; } }
+
+  .breathe-wrap{ display:flex; flex-direction:column; align-items:center; gap:12px; padding: 14px 4px 6px 4px; }
+  .breathe-circle{
+    width: 92px; height:92px; border-radius:50%;
+    background: var(--accent-grad);
+    border: 1px solid var(--glass-border); transform: scale(0.7); transition: transform 4s ease-in-out;
+    box-shadow: var(--glow-btn);
+  }
+  .breathe-circle.grow{ transform: scale(1.15); }
+  .breathe-circle.shrink{ transform: scale(0.7); }
+  .breathe-label{ font-family:'Fraunces', serif; font-size: 0.95rem; color: var(--ink); font-weight:500; }
+  .mood-options{ display:flex; gap:7px; flex-wrap:wrap; padding-top:12px; }
+  .mood-btn{
+    border: 1px solid var(--glass-border); background: var(--glass-weak); font-family: inherit; font-size: 0.79rem;
+    padding: 7px 12px; border-radius: 999px; cursor:pointer; color: var(--ink); font-weight:500; backdrop-filter: blur(6px);
+    transition: border-color .15s var(--ease), background .15s var(--ease), transform .12s var(--ease), box-shadow .15s var(--ease);
+  }
+  .mood-btn:hover{ border-color: color-mix(in srgb, var(--accent-1) 50%, var(--glass-border)); background: var(--glass); transform: translateY(-1px); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-1) 10%, transparent); }
+  .mood-btn:disabled{ opacity:0.4; cursor:default; transform:none; box-shadow:none; }
+
+  .composer{
+    display:flex; align-items:center; gap:9px; padding: 8px; margin-top: 12px;
+    border: 1px solid var(--glass-border); border-radius: 999px; background: var(--glass-weak);
+    backdrop-filter: blur(10px); box-shadow: var(--shadow); flex-shrink:0;
+    transition: border-color .16s var(--ease), box-shadow .16s var(--ease);
+  }
+  .composer:focus-within{ border-color: color-mix(in srgb, var(--accent-1) 55%, var(--glass-border)); box-shadow: var(--ring); }
+  .composer input[type="text"]{
+    flex:1; padding: 8px 8px; border-radius: 999px; border: none; background: transparent;
+    font-family: inherit; font-size: 0.93rem; color: var(--ink); outline:none;
+  }
+  .composer input[type="text"]::placeholder{ color: var(--ink-faint); }
+  .icon-btn.send{ background: var(--accent-grad); border-color: transparent; box-shadow: var(--glow-btn); }
+  .icon-btn.send:hover{ box-shadow: var(--glow-btn-hover); transform: translateY(-1px) scale(1.03); }
+  .icon-btn.send svg{ stroke:#fff; }
+
+  /* mic + voice waveform */
+  .icon-btn.mic{ position:relative; overflow:hidden; }
+  .icon-btn.mic svg{ transition: opacity .15s var(--ease), transform .15s var(--ease); }
+  .mic-wave{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:2.5px; opacity:0; transform: scale(.8); transition: opacity .15s var(--ease), transform .15s var(--ease); pointer-events:none; }
+  .mic-wave span{ width:2.5px; height:6px; border-radius:2px; background: var(--accent-grad); animation: waveBar 1s ease-in-out infinite; }
+  .mic-wave span:nth-child(1){ animation-delay: 0s; }
+  .mic-wave span:nth-child(2){ animation-delay: .12s; }
+  .mic-wave span:nth-child(3){ animation-delay: .24s; }
+  .mic-wave span:nth-child(4){ animation-delay: .36s; }
+  .mic-wave span:nth-child(5){ animation-delay: .48s; }
+  @keyframes waveBar{ 0%,100%{ height:5px; } 50%{ height:16px; } }
+  .icon-btn.mic.listening{ background: var(--accent-grad); border-color: transparent; color:#fff; box-shadow: var(--glow-btn); animation: pulse 1.4s infinite; }
+  .icon-btn.mic.listening svg{ opacity:0; transform: scale(.6); }
+  .icon-btn.mic.listening .mic-wave{ opacity:1; transform: scale(1); }
+  @keyframes pulse{ 0%{ box-shadow: var(--glow-btn); } 50%{ box-shadow: var(--glow-btn-hover); } 100%{ box-shadow: var(--glow-btn); } }
+  .mic-status{ font-size: 0.73rem; color: var(--gold); text-align:center; min-height: 14px; margin-top: 6px; flex-shrink:0; font-weight:500; }
+  .chat-footer-links{ text-align:center; padding-top:4px; flex-shrink:0; }
+  .link-btn{ background:none; border:none; font-family:inherit; font-size: 0.75rem; color: var(--ink-soft); text-decoration: underline; text-underline-offset:2px; cursor:pointer; padding: 4px; transition: color .15s var(--ease); }
+  .link-btn:hover{ color: var(--rust); }
+  .disclaimer{ font-size: 0.68rem; color: var(--ink-faint); text-align:center; padding-top: 10px; flex-shrink:0; line-height:1.5; }
+
+  /* ---------------- cards ---------------- */
+  .card{ background: var(--glass); backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 18px; margin-top: 14px; box-shadow: var(--shadow); position:relative; overflow:hidden; }
+  .card::before{ content:""; position:absolute; top:0; left:0; right:0; height:2px; background: var(--accent-grad); opacity:.7; }
+  .card h3{ margin: 0 0 12px 0; font-family:'Fraunces', serif; font-weight:560; font-size:1.08rem; color: var(--ink); }
+  .checkin-status{ font-size: 0.87rem; color: var(--ink-soft); line-height:1.5; }
+  .checkin-status strong{ color: var(--ink); font-weight:600; }
+  .empty-note{ font-size: 0.83rem; color: var(--ink-faint); margin: 8px 0 0 0; }
+  .mood-log-item{ display:flex; justify-content:space-between; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 0.86rem; }
+  .mood-log-item:last-child{ border-bottom:none; }
+  .mood-log-date{ color: var(--ink-soft); }
+  .journal-compose textarea{
+    width:100%; min-height: 96px; padding: 13px 14px; border-radius: var(--radius-sm); border: 1px solid var(--glass-border);
+    font-family: inherit; font-size: 0.9rem; resize: vertical; background: var(--glass-weak); color: var(--ink);
+    outline:none; backdrop-filter: blur(6px); transition: border-color .15s var(--ease), box-shadow .15s var(--ease); line-height:1.5;
+  }
+  .journal-compose textarea:focus{ border-color: color-mix(in srgb, var(--accent-1) 50%, var(--glass-border)); box-shadow: var(--ring); }
+  .journal-compose button{
+    margin-top: 10px; padding: 10px 18px; border-radius: 999px; border: none; background: var(--accent-grad);
+    color: #fff; font-family: inherit; font-size: 0.86rem; font-weight:600; cursor:pointer;
+    box-shadow: var(--glow-btn); transition: box-shadow .18s var(--ease), transform .12s var(--ease);
+  }
+  .journal-compose button:hover{ box-shadow: var(--glow-btn-hover); transform: translateY(-1px); }
+  .journal-compose button:active{ transform: translateY(0); }
+  .privacy-note{ font-size: 0.73rem; color: var(--ink-faint); margin-top:7px; }
+  .journal-item{ background: var(--glass); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 13px 15px; margin-top: 10px; box-shadow: var(--shadow); }
+  .journal-item-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom: 7px; }
+  .journal-item-date{ font-size: 0.75rem; color: var(--ink-faint); font-weight:500; }
+  .journal-item-text{ font-size: 0.89rem; white-space: pre-wrap; line-height:1.55; }
+  .journal-remove{ background:none; border:none; color: var(--ink-faint); font-size: 0.73rem; text-decoration: underline; text-underline-offset:2px; cursor:pointer; transition: color .15s var(--ease); }
+  .journal-remove:hover{ color: var(--rust); }
+
+  /* ---------------- modals ---------------- */
+  .modal-overlay{ position:fixed; inset:0; background: rgba(6,6,16,0.5); backdrop-filter: blur(6px); display:none; align-items:center; justify-content:center; padding: 20px; z-index: 50; }
+  .modal-overlay.open{ display:flex; animation: fadeIn .18s var(--ease); }
+  @keyframes fadeIn{ from{ opacity:0; } to{ opacity:1; } }
+  .modal{ background: var(--glass-strong); backdrop-filter: var(--blur) saturate(160%); border-radius: var(--radius); padding: 24px; max-width: 420px; width:100%; box-shadow: var(--shadow-lg); border: 1px solid var(--glass-border); animation: pop .22s var(--ease); }
+  @keyframes pop{ from{ opacity:0; transform: scale(.96) translateY(6px); } to{ opacity:1; transform: scale(1) translateY(0); } }
+  .modal h3{ font-family:'Fraunces', serif; font-weight:560; color: var(--ink); margin: 0 0 9px 0; font-size:1.12rem; }
+  .modal p{ font-size: 0.89rem; color: var(--ink-soft); line-height:1.55; }
+  .modal ul{ padding-left: 18px; font-size: 0.86rem; line-height: 1.75; color: var(--ink-soft); }
+  .modal-actions{ display:flex; gap:9px; margin-top: 14px; flex-wrap: wrap; }
+  .btn-primary{ background: var(--accent-grad); color:#fff; border:none; padding:10px 17px; border-radius:999px; cursor:pointer; font-family:inherit; font-size:0.85rem; font-weight:600; box-shadow: var(--glow-btn); transition: box-shadow .18s var(--ease), transform .12s var(--ease); }
+  .btn-primary:hover{ box-shadow: var(--glow-btn-hover); transform: translateY(-1px); }
+  .btn-danger{ background: linear-gradient(135deg, var(--rust), #FF9A6B); color:#fff; border:none; padding:10px 17px; border-radius:999px; cursor:pointer; font-family:inherit; font-size:0.85rem; font-weight:600; box-shadow: 0 6px 18px -4px color-mix(in srgb, var(--rust) 55%, transparent); transition: filter .15s var(--ease), transform .12s var(--ease); }
+  .btn-danger:hover{ filter: brightness(1.08); transform: translateY(-1px); }
+  .btn-secondary{ background: var(--glass-weak); border:1px solid var(--glass-border); color:var(--ink); padding:10px 17px; border-radius:999px; cursor:pointer; font-family:inherit; font-size:0.85rem; font-weight:500; backdrop-filter: blur(6px); transition: border-color .15s var(--ease), background .15s var(--ease); }
+  .btn-secondary:hover{ border-color: color-mix(in srgb, var(--accent-1) 45%, var(--glass-border)); background: var(--glass); }
+  .banner-note{ font-size: 0.74rem; color: var(--gold); background: var(--gold-soft); border-radius: var(--radius-sm); padding: 9px 11px; margin-top: 9px; flex-shrink:0; line-height:1.5; }
+
+  /* ---------------- history ---------------- */
+  .history-search{
+    width:100%; padding:11px 14px; border-radius:999px; border:1px solid var(--glass-border); background:var(--glass-weak);
+    color:var(--ink); font-family:inherit; font-size:0.85rem; margin-top:10px; outline:none; backdrop-filter: blur(6px);
+    transition: border-color .15s var(--ease), box-shadow .15s var(--ease);
+  }
+  .history-search:focus{ border-color: color-mix(in srgb, var(--accent-1) 50%, var(--glass-border)); box-shadow: var(--ring); }
+  .history-date-heading{ font-size:0.72rem; color:var(--ink-faint); margin:18px 0 7px 0; font-weight:700; letter-spacing: 0.04em; text-transform:uppercase; }
+  .history-row{ display:flex; gap:9px; padding:8px 0; font-size:0.85rem; border-bottom:1px solid var(--line); align-items:flex-start; }
+  .history-who{ color:var(--ink-soft); flex-shrink:0; width:64px; font-size:0.76rem; padding-top:1px; font-weight:600; }
+  .history-text{ flex:1; white-space:pre-wrap; }
+  .history-time{ color:var(--ink-faint); font-size:0.68rem; flex-shrink:0; padding-top:1px; }
+  @media (max-width: 480px){ header{ flex-direction:column; } .toolbar{ align-self:flex-start; } .history-who{ width:50px; } .app{ padding: 18px 16px 14px 16px; } .bg-orb{ display:none; } }
+
+  /* ---------------- sidebar (past chats) ---------------- */
+  .menu-btn{ display:flex; }
+  .sidebar{
+    width: 264px; flex-shrink:0; background: var(--glass); backdrop-filter: var(--blur) saturate(160%); border: none; border-right: 1px solid var(--glass-border);
+    display:flex; flex-direction:column; height: 100vh; min-height: 100vh; padding: 16px 12px;
+    margin-right: 0; border-radius: 0; box-shadow: none;
+    transition: transform .24s var(--ease), opacity .24s var(--ease);
+  }
+  .sidebar-header{ display:flex; align-items:center; justify-content:space-between; padding: 3px 5px 14px 5px; }
+  .sidebar-header span{ font-family:'Fraunces', serif; font-size: 1.02rem; color: var(--ink); font-weight:560; }
+  .new-chat-btn{
+    display:flex; align-items:center; gap:9px; width:100%; padding: 11px 13px; border-radius: var(--radius-sm);
+    border: 1px solid var(--glass-border); background: var(--glass-weak); color: var(--ink); font-family: inherit;
+    font-size: 0.86rem; font-weight:600; cursor:pointer; flex-shrink:0; backdrop-filter: blur(6px);
+    transition: border-color .15s var(--ease), background .15s var(--ease), box-shadow .15s var(--ease);
+  }
+  .new-chat-btn:hover{ border-color: color-mix(in srgb, var(--accent-1) 50%, var(--glass-border)); background: var(--glass); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-1) 10%, transparent); }
+  .new-chat-btn svg{ width:16px; height:16px; flex-shrink:0; }
+  .sidebar-search{
+    width:100%; margin-top:11px; padding: 9px 13px; border-radius: 999px; border: 1px solid var(--glass-border);
+    background: var(--glass-weak); color: var(--ink); font-family: inherit; font-size: 0.8rem; outline:none; flex-shrink:0;
+    backdrop-filter: blur(6px); transition: border-color .15s var(--ease);
+  }
+  .sidebar-search:focus{ border-color: color-mix(in srgb, var(--accent-1) 50%, var(--glass-border)); }
+  .sidebar-list{ flex:1; overflow-y:auto; margin-top: 11px; display:flex; flex-direction:column; gap:2px; }
+  .sidebar-list::-webkit-scrollbar{ width:5px; }
+  .sidebar-list::-webkit-scrollbar-thumb{ background: var(--line); border-radius:4px; }
+  .sidebar-item{ display:flex; align-items:center; gap:6px; width:100%; text-align:left; padding: 10px 11px; border-radius: var(--radius-sm); border: none; background: transparent; cursor:pointer; font-family: inherit; transition: background .15s var(--ease); }
+  .sidebar-item:hover{ background: var(--glass); }
+  .sidebar-item.active{ background: var(--glass); box-shadow: inset 2px 0 0 var(--accent-1); }
+  .sidebar-item-title{ flex:1; min-width:0; font-size: 0.83rem; color: var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .sidebar-item-date{ font-size: 0.68rem; color: var(--ink-faint); flex-shrink:0; }
+  .sidebar-item-del{ flex-shrink:0; border:none; background:none; color: var(--ink-faint); font-size: 0.95rem; line-height:1; cursor:pointer; padding: 2px 5px; border-radius:6px; opacity:0; transition: opacity .15s var(--ease), color .15s var(--ease); }
+  .sidebar-item:hover .sidebar-item-del{ opacity:1; }
+  .sidebar-item-del:hover{ color: var(--rust); background: var(--rust-soft); }
+  .sidebar-backdrop{ display:none; position:fixed; inset:0; background: rgba(6,6,16,0.45); backdrop-filter: blur(3px); z-index: 39; }
+  .sidebar-backdrop.open{ display:block; }
+
+  @media (max-width: 860px){
+    .layout{ max-width: none; }
+    .sidebar{ position:fixed; top:0; left:0; height:100vh; z-index:40; margin-right:0; border-radius:0; width: min(288px, 84vw); transform: translateX(-100%); box-shadow: 4px 0 24px rgba(0,0,0,0.2); border-width: 0 1px 0 0; }
+    .sidebar.open{ transform: translateX(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .bg-orb, .brand-mark, .row.bot::before, .typing span, .icon-btn.mic.listening, .mic-wave span{ animation: none !important; }
+    .row{ animation: none !important; }
+    .tab-panel.active{ animation: none !important; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+<div class="bg-orb bg-orb-3"></div>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header"><span id="sidebarTitle">Chats</span></div>
+    <button class="new-chat-btn" id="newChatBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      <span id="newChatLabel">New chat</span>
+    </button>
+    <input type="text" class="sidebar-search" id="sidebarSearch">
+    <div class="sidebar-list" id="sidebarList"></div>
+  </aside>
+
+<div class="app">
+  <header>
+    <div style="display:flex; align-items:flex-start; gap:8px;">
+      <button class="icon-btn menu-btn" id="sidebarToggleBtn" title="Chat history">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      <div>
+        <h1><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span>HealthFit24x7</h1>
+        <p id="subtitleText"></p>
+      </div>
+    </div>
+    <div class="toolbar">
+      <div class="lang-toggle" id="langToggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="hi">Hinglish</button>
+      </div>
+      <button class="icon-btn" id="themeBtn" title="Toggle dark mode"></button>
+      <label class="voice-toggle">
+        Voice
+        <span class="switch">
+          <input type="checkbox" id="voiceToggle">
+          <span class="slider"></span>
+        </span>
+      </label>
+      <button class="icon-btn" id="settingsBtn" title="AI settings (Groq API key)">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="chat">Chat</button>
+    <button class="tab-btn" data-tab="mood">Mood Tracker</button>
+    <button class="tab-btn" data-tab="journal">Journal</button>
+    <button class="tab-btn" data-tab="history">History</button>
+  </nav>
+
+  <section id="tab-chat" class="tab-panel active">
+    <div class="chips" id="chips"></div>
+    <div class="chat-window" id="chatWindow"></div>
+    <div id="fileWarning" class="banner-note" style="display:none;"></div>
+    <div class="composer">
+      <button class="icon-btn mic" id="micBtn" title="Speak your message">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+          <path d="M19 10v1a7 7 0 0 1-14 0v-1"></path>
+          <line x1="12" y1="19" x2="12" y2="23"></line>
+          <line x1="8" y1="23" x2="16" y2="23"></line>
+        </svg>
+        <span class="mic-wave"><span></span><span></span><span></span><span></span><span></span></span>
+      </button>
+      <input type="text" id="textInput" autocomplete="off">
+      <button class="icon-btn send" id="sendBtn" title="Send">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+    <div class="mic-status" id="micStatus"></div>
+    <div class="chat-footer-links"><button class="link-btn" id="clearChatBtn"></button></div>
+  </section>
+
+  <section id="tab-mood" class="tab-panel">
+    <div class="card" id="checkinCard">
+      <h3 id="checkinHeading"></h3>
+      <div id="checkinContent"></div>
+    </div>
+    <div class="card">
+      <h3 id="chartHeading"></h3>
+      <svg id="moodChart" viewBox="0 0 320 130" style="width:100%; height:auto;"></svg>
+      <p class="empty-note" id="moodChartEmpty"></p>
+    </div>
+    <div class="card">
+      <h3 id="logHeading"></h3>
+      <div id="moodLog"></div>
+    </div>
+  </section>
+
+  <section id="tab-journal" class="tab-panel">
+    <div class="card journal-compose">
+      <h3 id="journalHeading"></h3>
+      <textarea id="journalInput"></textarea>
+      <button id="journalSaveBtn"></button>
+      <p class="privacy-note" id="journalPrivacyNote"></p>
+    </div>
+    <div id="journalList"></div>
+  </section>
+
+  <section id="tab-history" class="tab-panel">
+    <input type="text" class="history-search" id="historySearch">
+    <div id="historyList"></div>
+    <div class="chat-footer-links" style="margin-top:14px;"><button class="link-btn" id="clearHistoryBtn2"></button></div>
+  </section>
+
+  <div class="disclaimer" id="disclaimerText"></div>
+</div>
+</div>
+
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <h3 id="confirmTitle"></h3>
+    <p id="confirmMessage"></p>
+    <div class="modal-actions">
+      <button class="btn-danger" id="confirmYesBtn"></button>
+      <button class="btn-secondary" id="confirmNoBtn"></button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <h3 id="settingsTitle">AI settings</h3>
+    <p id="settingsIntro">This app talks to a small local server, which holds your Groq API key and forwards chat requests to Groq. Your key never touches this browser — it lives only in the server's <code>.env</code> file. If the server isn't running or has no key configured, the app automatically falls back to the built-in offline responses.</p>
+    <label for="groqModelInput" style="display:block;font-size:0.8rem;color:var(--ink-soft);margin-top:10px;">Model override (optional)</label>
+    <input type="text" id="groqModelInput" class="history-search" style="margin-top:4px;" placeholder="e.g. llama-3.3-70b-versatile">
+    <p id="settingsStatus" style="font-size:0.78rem;margin-top:8px;"></p>
+    <div class="modal-actions">
+      <button class="btn-primary" id="settingsSaveBtn">Save</button>
+      <button class="btn-secondary" id="settingsCheckBtn">Check server status</button>
+      <button class="btn-secondary" id="settingsCloseBtn">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------------- resilience helpers ----------------
+  // If any one feature block below throws (storage access denied in a sandboxed
+  // frame, a browser API missing, etc.) we log it and keep going, so the rest
+  // of the app (tabs, chat, clear button, etc.) still initializes instead of
+  // the whole page silently going dead.
+  var initWarnings = [];
+  function safeInit(label, fn){
+    try{ fn(); }
+    catch(err){
+      initWarnings.push(label);
+      console.error('[HealthFit24x7] "' + label + '" failed to initialize:', err);
+      showInitBanner();
+    }
+  }
+  function showInitBanner(){
+    var el = document.getElementById('fileWarning');
+    if(!el) return;
+    el.style.display = 'block';
+    el.textContent = (LANG === 'hi' ? 'Kuch features load nahi ho paaye: ' : 'Some features could not load: ') + initWarnings.join(', ') + '. ' + (LANG === 'hi' ? 'Baaki app kaam karta rahega.' : 'The rest of the app should keep working.');
+  }
+  function safeStorageGet(key, fallback){
+    try{ return localStorage.getItem(key); }catch(e){ return fallback; }
+  }
+  function safeStorageSet(key, value){
+    try{ localStorage.setItem(key, value); return true; }catch(e){ return false; }
+  }
+
+  // ---------------- i18n ----------------
+  var LANG = safeStorageGet('ek_lang', null) || 'en';
+
+  var T = {
+    en: {
+      subtitle: "Your AI companion for health, wellbeing & support — anytime, anywhere.",
+      placeholder: "Type how you're feeling, or ask for a tip…",
+      disclaimer: "HealthFit24x7 offers general wellbeing tips and is not a substitute for professional medical or mental health care.",
+      clearChat: "Clear conversation",
+      clearConfirmTitle: "Clear this conversation?",
+      clearConfirmMsg: "Your mood log and journal will stay untouched.",
+      confirmYes: "Yes, clear it",
+      confirmCancel: "Cancel",
+      fileWarning: "Voice input needs this page served over http/https rather than opened as a local file — text chat works fully either way.",
+      checkinHeading: "Today's check-in",
+      chartHeading: "Last 14 days",
+      logHeading: "Mood log",
+      noEntries: "No entries yet.",
+      chartEmpty: "Check in for a few days to see your trend here.",
+      loggedFor: "Logged for today: ",
+      updateCheckin: "Update today's check-in",
+      checkinNow: "How are you feeling right now?",
+      journalHeading: "Write it down",
+      journalPlaceholder: "Write whatever's on your mind — no structure needed.",
+      journalSave: "Save entry",
+      journalPrivacy: "Saved only on this device, in this browser — never sent anywhere.",
+      journalRemove: "Remove",
+      historySearchPh: "Search your conversations…",
+      historyClear: "Clear all history",
+      sidebarTitle: "Chats",
+      newChat: "New chat",
+      sidebarSearchPh: "Search chats…",
+      newConversation: "New conversation",
+      deleteChatConfirmTitle: "Delete this chat?",
+      deleteChatConfirmMsg: "This conversation will be permanently removed.",
+      historyYou: "You",
+      historyBot: "HealthFit24x7",
+      checkedIn: "You checked in: ",
+      voiceOn: "Voice replies are on.",
+      moodLabels: { great:'Great', good:'Good', okay:'Okay', low:'Low', struggling:'Struggling' },
+      chips: [
+        { label:"Breathing exercise", msg:"Can we do a breathing exercise?" },
+        { label:"Sleep tips", msg:"I've been having trouble sleeping" },
+        { label:"Feeling stressed", msg:"I'm feeling really stressed today" },
+        { label:"Gratitude prompt", msg:"Give me a gratitude prompt" },
+        { label:"Motivation boost", msg:"I have no motivation to do anything" },
+        { label:"My mood lately", msg:"How have I been doing lately?" }
+      ]
+    },
+    hi: {
+      subtitle: "Aapka AI companion — health, wellbeing aur support ke liye, kabhi bhi, kahin bhi.",
+      placeholder: "Type karo ki kaisa feel ho raha hai, ya koi tip pucho…",
+      disclaimer: "HealthFit24x7 general wellbeing tips deta hai aur professional medical ya mental health care ka substitute nahi hai.",
+      clearChat: "Conversation clear karo",
+      clearConfirmTitle: "Yeh conversation clear karni hai?",
+      clearConfirmMsg: "Aapka mood log aur journal waise hi rahenge, un par asar nahi padega.",
+      confirmYes: "Haan, clear karo",
+      confirmCancel: "Cancel",
+      fileWarning: "Voice input ke liye yeh page http/https par serve hona chahiye, local file ki tarah open karne se nahi chalega — text chat dono tarike se pura kaam karta hai.",
+      checkinHeading: "Aaj ka check-in",
+      chartHeading: "Pichhle 14 din",
+      logHeading: "Mood log",
+      noEntries: "Abhi tak koi entry nahi hai.",
+      chartEmpty: "Trend dekhne ke liye kuch dinon tak check-in karo.",
+      loggedFor: "Aaj ke liye record ho gaya: ",
+      updateCheckin: "Aaj ka check-in update karo",
+      checkinNow: "Abhi kaisa feel kar rahe ho?",
+      journalHeading: "Likh dalo",
+      journalPlaceholder: "Jo bhi dimaag mein hai likh do — koi structure ki zarurat nahi.",
+      journalSave: "Entry save karo",
+      journalPrivacy: "Sirf isi device aur browser mein save hota hai — kahin bhi bheja nahi jaata.",
+      journalRemove: "Hatao",
+      historySearchPh: "Apni baatcheet mein dhoondo…",
+      historyClear: "Poora history clear karo",
+      sidebarTitle: "Chats",
+      newChat: "Nayi chat",
+      sidebarSearchPh: "Chats mein dhoondo…",
+      newConversation: "Nayi baatcheet",
+      deleteChatConfirmTitle: "Yeh chat delete karni hai?",
+      deleteChatConfirmMsg: "Yeh conversation permanently hat jayegi.",
+      historyYou: "Aap",
+      historyBot: "HealthFit24x7",
+      checkedIn: "Aapne check-in kiya: ",
+      voiceOn: "Voice replies on hain.",
+      moodLabels: { great:'Zabardast', good:'Accha', okay:'Thik-thak', low:'Low sa', struggling:'Mushkil mein' },
+      chips: [
+        { label:"Breathing exercise", msg:"Kya hum breathing exercise kar sakte hain?" },
+        { label:"Neend tips", msg:"Mujhe neend aane mein problem ho rahi hai" },
+        { label:"Stress ho raha hai", msg:"Aaj bahut stress feel ho raha hai" },
+        { label:"Gratitude prompt", msg:"Mujhe ek gratitude prompt do" },
+        { label:"Motivation boost", msg:"Mera kuch bhi karne ka mann nahi ho raha" },
+        { label:"Mera mood kaisa raha", msg:"Main recently kaisa kar raha hoon?" }
+      ]
+    }
+  };
+
+  function tr(key){ return T[LANG][key]; }
+
+  // ---------------- storage helpers ----------------
+  function loadJSON(key, fallback){ try{ var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }catch(e){ return fallback; } }
+  function saveJSON(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
+  function todayStr(){ var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+
+  var profile = loadJSON('ek_profile', { name: null, lastMood: null, lastMoodDate: null, hasExplainedInference: false });
+  var moods = loadJSON('ek_moods', []);
+  var journal = loadJSON('ek_journal', []);
+  var tipIdx = loadJSON('ek_tipidx', {});
+
+  // ---------------- conversations (sidebar chat history) ----------------
+  var conversations = loadJSON('ek_conversations', null);
+  var activeId = safeStorageGet('ek_active_id', null);
+
+  if(!conversations){
+    // Migrate anyone with the old single-thread history into their first conversation.
+    var legacy = loadJSON('ek_history', []);
+    conversations = [];
+    if(legacy && legacy.length){
+      var firstUserMsg = legacy.find(function(m){ return m.who === 'user'; });
+      conversations.push({
+        id: uid(),
+        title: firstUserMsg ? (firstUserMsg.text.length > 42 ? firstUserMsg.text.slice(0,42) + '…' : firstUserMsg.text) : null,
+        messages: legacy,
+        createdAt: legacy[0].ts || Date.now(),
+        updatedAt: legacy[legacy.length - 1].ts || Date.now()
+      });
+    }
+  }
+  if(!conversations.length){
+    conversations.push({ id: uid(), title: null, messages: [], createdAt: Date.now(), updatedAt: Date.now() });
+  }
+  if(!activeId || !conversations.some(function(c){ return c.id === activeId; })){
+    activeId = conversations.slice().sort(function(a,b){ return b.updatedAt - a.updatedAt; })[0].id;
+  }
+  saveJSON('ek_conversations', conversations);
+  saveJSON('ek_active_id', activeId);
+
+  function getActiveConversation(){ return conversations.find(function(c){ return c.id === activeId; }); }
+  var chatHistory = getActiveConversation().messages;
+
+  function persistAll(){
+    var conv = getActiveConversation();
+    if(conv){ conv.messages = chatHistory; conv.updatedAt = Date.now(); }
+    saveJSON('ek_profile', profile);
+    saveJSON('ek_conversations', conversations);
+    saveJSON('ek_active_id', activeId);
+    saveJSON('ek_moods', moods);
+    saveJSON('ek_journal', journal);
+    saveJSON('ek_tipidx', tipIdx);
+    renderSidebar();
+  }
+
+  // ---------------- DOM refs ----------------
+  var sidebar = document.getElementById('sidebar');
+  var sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+  var sidebarBackdrop = document.getElementById('sidebarBackdrop');
+  var sidebarList = document.getElementById('sidebarList');
+  var sidebarSearch = document.getElementById('sidebarSearch');
+  var newChatBtn = document.getElementById('newChatBtn');
+  var chatWindow = document.getElementById('chatWindow');
+  var textInput = document.getElementById('textInput');
+  var sendBtn = document.getElementById('sendBtn');
+  var micBtn = document.getElementById('micBtn');
+  var micStatus = document.getElementById('micStatus');
+  var voiceToggle = document.getElementById('voiceToggle');
+  var chips = document.getElementById('chips');
+  var themeBtn = document.getElementById('themeBtn');
+  var settingsBtn = document.getElementById('settingsBtn');
+  var settingsModal = document.getElementById('settingsModal');
+  var groqModelInput = document.getElementById('groqModelInput');
+  var settingsStatus = document.getElementById('settingsStatus');
+  var settingsSaveBtn = document.getElementById('settingsSaveBtn');
+  var settingsCheckBtn = document.getElementById('settingsCheckBtn');
+  var settingsCloseBtn = document.getElementById('settingsCloseBtn');
+  var clearChatBtn = document.getElementById('clearChatBtn');
+  var clearHistoryBtn2 = document.getElementById('clearHistoryBtn2');
+  var fileWarning = document.getElementById('fileWarning');
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var tabPanels = document.querySelectorAll('.tab-panel');
+  var checkinContent = document.getElementById('checkinContent');
+  var moodLogEl = document.getElementById('moodLog');
+  var moodChart = document.getElementById('moodChart');
+  var moodChartEmpty = document.getElementById('moodChartEmpty');
+  var journalInput = document.getElementById('journalInput');
+  var journalSaveBtn = document.getElementById('journalSaveBtn');
+  var journalList = document.getElementById('journalList');
+  var langToggle = document.getElementById('langToggle');
+  var historySearch = document.getElementById('historySearch');
+  var historyList = document.getElementById('historyList');
+  var confirmModal = document.getElementById('confirmModal');
+  var confirmTitle = document.getElementById('confirmTitle');
+  var confirmMessage = document.getElementById('confirmMessage');
+  var confirmYesBtn = document.getElementById('confirmYesBtn');
+  var confirmNoBtn = document.getElementById('confirmNoBtn');
+
+  // ---------------- generic confirm modal (no native confirm/alert) ----------------
+  var pendingConfirmAction = null;
+  function showConfirm(title, message, onYes){
+    try{
+      if(!confirmModal || !confirmTitle || !confirmMessage || !confirmYesBtn || !confirmNoBtn){ throw new Error('confirm modal elements missing'); }
+      confirmTitle.textContent = title;
+      confirmMessage.textContent = message;
+      confirmYesBtn.textContent = tr('confirmYes');
+      confirmNoBtn.textContent = tr('confirmCancel');
+      pendingConfirmAction = onYes;
+      confirmModal.classList.add('open');
+    } catch(err){
+      // Fallback so the action is never silently stuck, even if the modal
+      // markup failed to render for some reason.
+      console.error('[HealthFit24x7] custom confirm modal failed, falling back to native confirm:', err);
+      if(window.confirm(title + '\n\n' + message)) onYes();
+    }
+  }
+  confirmYesBtn.addEventListener('click', function(){
+    confirmModal.classList.remove('open');
+    var action = pendingConfirmAction;
+    pendingConfirmAction = null;
+    if(action) action();
+  });
+  confirmNoBtn.addEventListener('click', function(){
+    confirmModal.classList.remove('open');
+    pendingConfirmAction = null;
+  });
+  confirmModal.addEventListener('click', function(e){ if(e.target === confirmModal){ confirmModal.classList.remove('open'); pendingConfirmAction = null; } });
+
+  // ---------------- theme ----------------
+  function applyTheme(mode){
+    document.documentElement.setAttribute('data-theme', mode);
+    saveJSON('ek_theme', mode);
+    themeBtn.innerHTML = mode === 'dark'
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="1.5" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22.5"></line><line x1="4.2" y1="4.2" x2="6" y2="6"></line><line x1="18" y1="18" x2="19.8" y2="19.8"></line><line x1="1.5" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22.5" y2="12"></line><line x1="4.2" y1="19.8" x2="6" y2="18"></line><line x1="18" y1="6" x2="19.8" y2="4.2"></line></svg>'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"></path></svg>';
+  }
+  var savedTheme = loadJSON('ek_theme', null);
+  if(!savedTheme){ savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'; }
+  applyTheme(savedTheme);
+  themeBtn.addEventListener('click', function(){
+    var current = document.documentElement.getAttribute('data-theme');
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  });
+
+  // ---------------- language toggle ----------------
+  function setLang(lang){
+    LANG = lang;
+    localStorage.setItem('ek_lang', lang);
+    langToggle.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.lang === lang); });
+    refreshStaticText();
+    renderChips();
+    renderSidebar();
+    if(document.getElementById('tab-mood').classList.contains('active')) renderMoodTab();
+    if(document.getElementById('tab-journal').classList.contains('active')) renderJournalTab();
+    if(document.getElementById('tab-history').classList.contains('active')) renderHistoryTab();
+  }
+  langToggle.addEventListener('click', function(e){
+    var btn = e.target.closest('.lang-btn');
+    if(btn) setLang(btn.dataset.lang);
+  });
+
+  function refreshStaticText(){
+    document.getElementById('subtitleText').textContent = tr('subtitle');
+    textInput.placeholder = tr('placeholder');
+    document.getElementById('disclaimerText').textContent = tr('disclaimer');
+    clearChatBtn.textContent = tr('clearChat');
+    clearHistoryBtn2.textContent = tr('historyClear');
+    fileWarning.textContent = tr('fileWarning');
+    document.getElementById('checkinHeading').textContent = tr('checkinHeading');
+    document.getElementById('chartHeading').textContent = tr('chartHeading');
+    document.getElementById('logHeading').textContent = tr('logHeading');
+    document.getElementById('journalHeading').textContent = tr('journalHeading');
+    journalInput.placeholder = tr('journalPlaceholder');
+    journalSaveBtn.textContent = tr('journalSave');
+    document.getElementById('journalPrivacyNote').textContent = tr('journalPrivacy');
+    historySearch.placeholder = tr('historySearchPh');
+    document.getElementById('sidebarTitle').textContent = tr('sidebarTitle');
+    document.getElementById('newChatLabel').textContent = tr('newChat');
+    sidebarSearch.placeholder = tr('sidebarSearchPh');
+  }
+
+  function renderChips(){
+    chips.innerHTML = '';
+    tr('chips').forEach(function(c){
+      var btn = document.createElement('button');
+      btn.className = 'chip';
+      btn.textContent = c.label;
+      btn.dataset.msg = c.msg;
+      chips.appendChild(btn);
+    });
+  }
+
+  // ---------------- sidebar (past chats) ----------------
+  function relativeDate(ts){
+    var d = new Date(ts), now = new Date();
+    if(d.toDateString() === now.toDateString()) return d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    var yesterday = new Date(now); yesterday.setDate(now.getDate() - 1);
+    if(d.toDateString() === yesterday.toDateString()) return LANG === 'hi' ? 'Kal' : 'Yesterday';
+    return d.toLocaleDateString();
+  }
+
+  function renderSidebar(){
+    var query = (sidebarSearch.value || '').trim().toLowerCase();
+    var sorted = conversations.slice().sort(function(a,b){ return b.updatedAt - a.updatedAt; });
+    var filtered = query ? sorted.filter(function(c){ return (c.title || tr('newConversation')).toLowerCase().indexOf(query) !== -1; }) : sorted;
+    sidebarList.innerHTML = '';
+    if(filtered.length === 0){
+      sidebarList.innerHTML = '<p class="empty-note">' + tr('noEntries') + '</p>';
+      return;
+    }
+    filtered.forEach(function(c){
+      var item = document.createElement('button');
+      item.className = 'sidebar-item' + (c.id === activeId ? ' active' : '');
+      var titleSpan = document.createElement('span');
+      titleSpan.className = 'sidebar-item-title';
+      titleSpan.textContent = c.title || tr('newConversation');
+      var dateSpan = document.createElement('span');
+      dateSpan.className = 'sidebar-item-date';
+      dateSpan.textContent = relativeDate(c.updatedAt);
+      var delBtn = document.createElement('button');
+      delBtn.className = 'sidebar-item-del';
+      delBtn.title = 'Delete';
+      delBtn.textContent = '\u00D7';
+      delBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        showConfirm(tr('deleteChatConfirmTitle'), tr('deleteChatConfirmMsg'), function(){ deleteConversation(c.id); });
+      });
+      item.appendChild(titleSpan);
+      item.appendChild(dateSpan);
+      item.appendChild(delBtn);
+      item.addEventListener('click', function(){ openConversation(c.id); closeSidebarOnMobile(); });
+      sidebarList.appendChild(item);
+    });
+  }
+
+  function openConversation(id){
+    if(id === activeId) return;
+    var conv = conversations.find(function(c){ return c.id === id; });
+    if(!conv) return;
+    activeId = id;
+    chatHistory = conv.messages;
+    saveJSON('ek_active_id', activeId);
+    chatWindow.innerHTML = '';
+    if(chatHistory.length){ chatHistory.forEach(renderStoredBubble); scrollToBottom(); }
+    else { greet(false); }
+    renderSidebar();
+  }
+
+  function createNewConversation(){
+    var conv = { id: uid(), title: null, messages: [], createdAt: Date.now(), updatedAt: Date.now() };
+    conversations.push(conv);
+    activeId = conv.id;
+    chatHistory = conv.messages;
+    saveJSON('ek_conversations', conversations);
+    saveJSON('ek_active_id', activeId);
+    chatWindow.innerHTML = '';
+    greet(true);
+    renderSidebar();
+  }
+
+  function deleteConversation(id){
+    conversations = conversations.filter(function(c){ return c.id !== id; });
+    if(conversations.length === 0){
+      conversations.push({ id: uid(), title: null, messages: [], createdAt: Date.now(), updatedAt: Date.now() });
+    }
+    if(id === activeId){
+      activeId = conversations.slice().sort(function(a,b){ return b.updatedAt - a.updatedAt; })[0].id;
+      chatHistory = getActiveConversation().messages;
+      chatWindow.innerHTML = '';
+      if(chatHistory.length){ chatHistory.forEach(renderStoredBubble); scrollToBottom(); }
+      else { greet(false); }
+    }
+    saveJSON('ek_conversations', conversations);
+    saveJSON('ek_active_id', activeId);
+    renderSidebar();
+  }
+
+  function openSidebar(){ sidebar.classList.add('open'); sidebarBackdrop.classList.add('open'); }
+  function closeSidebar(){ sidebar.classList.remove('open'); sidebarBackdrop.classList.remove('open'); }
+  function closeSidebarOnMobile(){ if(window.innerWidth <= 860) closeSidebar(); }
+
+  safeInit('sidebar (chat history panel)', function(){
+    if(window.innerWidth > 860) openSidebar();
+    sidebarToggleBtn.addEventListener('click', function(){
+      if(sidebar.classList.contains('open')) closeSidebar(); else openSidebar();
+    });
+    sidebarBackdrop.addEventListener('click', closeSidebar);
+    newChatBtn.addEventListener('click', function(){ createNewConversation(); closeSidebarOnMobile(); });
+    sidebarSearch.addEventListener('input', renderSidebar);
+  });
+
+  // ---------------- tabs ----------------
+  tabBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabBtns.forEach(function(b){ b.classList.remove('active'); });
+      tabPanels.forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      if(btn.dataset.tab === 'mood') renderMoodTab();
+      if(btn.dataset.tab === 'journal') renderJournalTab();
+      if(btn.dataset.tab === 'history') renderHistoryTab();
+    });
+  });
+
+  // ---------------- crisis modal ----------------
+
+  // ---------------- chat rendering ----------------
+  function scrollToBottom(){ chatWindow.scrollTop = chatWindow.scrollHeight; }
+
+  function renderStoredBubble(entry){
+    var row = document.createElement('div');
+    row.className = 'row ' + entry.who;
+    var bubble = document.createElement('div');
+    bubble.className = 'bubble' + (entry.crisis ? ' crisis' : '');
+    bubble.textContent = entry.text;
+    row.appendChild(bubble);
+    chatWindow.appendChild(row);
+  }
+
+  function addBubble(text, who, opts){
+    opts = opts || {};
+    var row = document.createElement('div');
+    row.className = 'row ' + who;
+    var bubble = document.createElement('div');
+    bubble.className = 'bubble' + (opts.crisis ? ' crisis' : '');
+    bubble.textContent = text;
+    row.appendChild(bubble);
+    chatWindow.appendChild(row);
+    scrollToBottom();
+    if(opts.persist !== false){
+      chatHistory.push({ who: who, text: text, ts: Date.now(), crisis: !!opts.crisis });
+      if(chatHistory.length > 400) chatHistory = chatHistory.slice(chatHistory.length - 400);
+      if(who === 'user'){
+        var conv = getActiveConversation();
+        if(conv && !conv.title){ conv.title = text.length > 42 ? text.slice(0, 42) + '…' : text; }
+      }
+      persistAll();
+    }
+    return bubble;
+  }
+
+  function addTyping(){
+    var row = document.createElement('div');
+    row.className = 'row bot';
+    row.id = 'typingRow';
+    var bubble = document.createElement('div');
+    bubble.className = 'bubble typing';
+    bubble.innerHTML = '<span></span><span></span><span></span>';
+    row.appendChild(bubble);
+    chatWindow.appendChild(row);
+    scrollToBottom();
+  }
+  function removeTyping(){ var t = document.getElementById('typingRow'); if(t) t.remove(); }
+
+  // ---------------- voice: speech synthesis ----------------
+  var voices = [];
+  var speakWatchdog = null;
+  function refreshVoices(){ if('speechSynthesis' in window){ voices = window.speechSynthesis.getVoices(); } }
+  safeInit('voice output (speechSynthesis)', function(){
+    if('speechSynthesis' in window){ refreshVoices(); window.speechSynthesis.onvoiceschanged = refreshVoices; }
+  });
+  function pickVoice(){
+    if(!voices.length) return null;
+    if(LANG === 'hi'){
+      var hiVoice = voices.find(function(v){ return /^hi/i.test(v.lang); });
+      if(hiVoice) return hiVoice;
+      var inVoice = voices.find(function(v){ return /en-IN/i.test(v.lang); });
+      if(inVoice) return inVoice;
+    }
+    var enVoice = voices.find(function(v){ return /en-US|en-GB/i.test(v.lang); });
+    return enVoice || voices[0];
+  }
+  function speak(text){
+    if(!voiceToggle.checked) return;
+    if(!('speechSynthesis' in window)){ micStatus.textContent = "Voice replies aren't supported in this browser."; return; }
+    window.speechSynthesis.cancel();
+    if(speakWatchdog){ clearInterval(speakWatchdog); speakWatchdog = null; }
+    var utter = new SpeechSynthesisUtterance(text);
+    var v = pickVoice();
+    if(v) utter.voice = v;
+    utter.lang = LANG === 'hi' ? (v && /^hi/i.test(v.lang) ? v.lang : 'en-IN') : 'en-US';
+    utter.rate = 0.98;
+    utter.pitch = 1.0;
+    utter.onstart = function(){
+      speakWatchdog = setInterval(function(){
+        if(window.speechSynthesis.speaking){ window.speechSynthesis.pause(); window.speechSynthesis.resume(); }
+      }, 9000);
+    };
+    utter.onend = function(){ if(speakWatchdog){ clearInterval(speakWatchdog); speakWatchdog = null; } };
+    utter.onerror = function(){ if(speakWatchdog){ clearInterval(speakWatchdog); speakWatchdog = null; } };
+    window.speechSynthesis.speak(utter);
+  }
+  voiceToggle.addEventListener('change', function(){
+    if(voiceToggle.checked){ speak(tr('voiceOn')); }
+    else if('speechSynthesis' in window){ window.speechSynthesis.cancel(); }
+  });
+
+  function botReply(text, delay, opts){
+    addTyping();
+    setTimeout(function(){
+      removeTyping();
+      addBubble(text, 'bot', opts);
+      speak(text);
+    }, delay || 500);
+  }
+
+  // ---------------- voice: speech recognition ----------------
+  if(location.protocol === 'file:'){ fileWarning.style.display = 'block'; }
+
+  var isSecureCtx = (window.isSecureContext !== false) && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:');
+  var inIframe = (function(){ try{ return window.self !== window.top; }catch(e){ return true; } })();
+
+  function micRecoveryMessage(reason){
+    // reason: 'insecure' | 'iframe' | 'not-allowed' | 'audio-capture' | 'unsupported'
+    var msgs = {
+      en: {
+        insecure: "Voice input needs a secure connection (https://) — it won't work over plain http:// on another device or domain.",
+        iframe: "This page seems to be embedded in another site/frame, which can silently block microphone access. Try opening the file directly in its own browser tab.",
+        'not-allowed': "Microphone access was blocked. Click the padlock/site-info icon next to the address bar → Site settings → Microphone → Allow, then reload the page.",
+        'audio-capture': "No microphone was found — check that one is connected and not in use by another app.",
+        unsupported: "Voice input isn't supported in this browser — try Chrome or Edge on desktop, or Chrome on Android."
+      },
+      hi: {
+        insecure: "Voice input ke liye secure connection (https://) chahiye — plain http:// par kisi doosre device/domain se kaam nahi karega.",
+        iframe: "Yeh page kisi doosre site/frame ke andar embed lag raha hai, jisse mic access block ho sakta hai. File ko seedhe apne browser ke naye tab mein khol kar try karo.",
+        'not-allowed': "Mic access block ho gaya. Address bar ke paas padlock/site-info icon par click karo → Site settings → Microphone → Allow, phir page reload karo.",
+        'audio-capture': "Koi microphone nahi mila — check karo ki ek connected hai aur kisi aur app mein use nahi ho raha.",
+        unsupported: "Voice input is browser mein support nahi hai — desktop par Chrome ya Edge try karo, ya Android par Chrome."
+      }
+    };
+    return (msgs[LANG] || msgs.en)[reason] || (msgs[LANG] || msgs.en)['not-allowed'];
+  }
+
+  var SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var recognition = null;
+  var listening = false;
+  var micPermissionState = null; // 'granted' | 'denied' | 'prompt' | null (unknown)
+
+  safeInit('voice input setup', function(){
+    if(!SpeechRecognitionCtor) return;
+    recognition = new SpeechRecognitionCtor();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+
+    recognition.onstart = function(){ listening = true; micBtn.classList.add('listening'); micStatus.textContent = LANG === 'hi' ? 'Sun raha hoon…' : 'Listening…'; };
+    recognition.onresult = function(event){
+      var interim = '', final = '';
+      for(var i = event.resultIndex; i < event.results.length; i++){
+        var transcript = event.results[i][0].transcript;
+        if(event.results[i].isFinal) final += transcript; else interim += transcript;
+      }
+      textInput.value = final || interim;
+      if(final){ handleUserMessage(final); }
+    };
+    recognition.onerror = function(event){
+      if(event.error === 'not-allowed' || event.error === 'service-not-allowed'){
+        if(!isSecureCtx){ micStatus.textContent = micRecoveryMessage('insecure'); return; }
+        if(inIframe){ micStatus.textContent = micRecoveryMessage('iframe'); return; }
+        micStatus.textContent = micRecoveryMessage('not-allowed');
+        return;
+      }
+      if(event.error === 'audio-capture'){ micStatus.textContent = micRecoveryMessage('audio-capture'); return; }
+      var otherEn = { 'no-speech': "Didn't catch that — try again.", 'network': 'Network issue with voice recognition — try again.' };
+      var otherHi = { 'no-speech': 'Kuch sunayi nahi diya — dobara try karo.', 'network': 'Voice recognition mein network issue — dobara try karo.' };
+      var msgs = LANG === 'hi' ? otherHi : otherEn;
+      micStatus.textContent = msgs[event.error] || (LANG === 'hi' ? 'Voice input mein dikkat aayi — dobara try karo.' : 'Voice input hit a snag — try again.');
+    };
+    recognition.onend = function(){ listening = false; micBtn.classList.remove('listening'); setTimeout(function(){ if(!listening) micStatus.textContent = ''; }, 2500); };
+
+    // Best-effort read of the current permission state so we can short-circuit
+    // straight to actionable instructions instead of just failing silently.
+    if(navigator.permissions && navigator.permissions.query){
+      navigator.permissions.query({ name: 'microphone' }).then(function(status){
+        micPermissionState = status.state;
+        status.onchange = function(){ micPermissionState = status.state; };
+      }).catch(function(){ /* not all browsers support querying 'microphone' */ });
+    }
+
+    micBtn.addEventListener('click', function(){
+      if(listening){ try{ recognition.stop(); }catch(e){} return; }
+      if(!isSecureCtx && location.protocol !== 'file:'){ micStatus.textContent = micRecoveryMessage('insecure'); return; }
+      if(location.protocol === 'file:'){ micStatus.textContent = LANG === 'hi' ? 'Mic ke liye page ko http/https par serve karo.' : 'Serve this page over http/https to enable the mic.'; return; }
+      if(micPermissionState === 'denied'){ micStatus.textContent = micRecoveryMessage(inIframe ? 'iframe' : 'not-allowed'); return; }
+
+      // Ask via getUserMedia first — this reliably triggers the browser's own
+      // permission prompt even in cases where starting recognition directly
+      // does not, and lets us show a clear message the moment it's denied.
+      if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
+        micStatus.textContent = LANG === 'hi' ? 'Mic permission maang rahe hain…' : 'Requesting microphone permission…';
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream){
+          stream.getTracks().forEach(function(t){ t.stop(); });
+          startRecognition();
+        }).catch(function(err){
+          if(err && (err.name === 'NotAllowedError' || err.name === 'SecurityError')){
+            micStatus.textContent = micRecoveryMessage(inIframe ? 'iframe' : 'not-allowed');
+          } else if(err && err.name === 'NotFoundError'){
+            micStatus.textContent = micRecoveryMessage('audio-capture');
+          } else {
+            startRecognition(); // fall back and let SpeechRecognition itself try/report
+          }
+        });
+      } else {
+        startRecognition();
+      }
+    });
+
+    function startRecognition(){
+      recognition.lang = LANG === 'hi' ? 'en-IN' : 'en-US';
+      try{ recognition.start(); }
+      catch(e){ micStatus.textContent = LANG === 'hi' ? 'Mic already shuru ho raha hai — ek second.' : 'Mic is already starting — one moment.'; }
+    }
+  });
+
+  if(!SpeechRecognitionCtor){
+    micBtn.addEventListener('click', function(){
+      micStatus.textContent = micRecoveryMessage('unsupported');
+      setTimeout(function(){ micStatus.textContent = ''; }, 3000);
+    });
+  }
+
+  // ---------------- breathing exercise ----------------
+  var BREATHE = {
+    en: { intro:"Let's slow things down for one round. Follow the circle — in through the nose, out through the mouth.", ready:'Get ready…', inhale:'Breathe in…', hold:'Hold.', exhale:'Breathe out…', done:'Nicely done. Notice how your shoulders feel.', log:'Guided a breathing exercise together.' },
+    hi: { intro:'Chalo thoda slow ho jaate hain ek round ke liye. Circle ko follow karo — nose se saans andar, mouth se bahar.', ready:'Taiyaar ho jao…', inhale:'Saans andar lo…', hold:'Roko.', exhale:'Saans bahar chodo…', done:'Bahut badhiya. Dekho shoulders kaise feel ho rahe hain.', log:'Ek saath breathing exercise ki.' }
+  };
+  function runBreathingExercise(){
+    var b = BREATHE[LANG];
+    addTyping();
+    setTimeout(function(){
+      removeTyping();
+      var row = document.createElement('div');
+      row.className = 'row bot';
+      var bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.innerHTML = b.intro + '<div class="breathe-wrap"><div class="breathe-circle" id="breatheCircle"></div><div class="breathe-label" id="breatheLabel">' + b.ready + '</div></div>';
+      row.appendChild(bubble);
+      chatWindow.appendChild(row);
+      scrollToBottom();
+
+      var circle = document.getElementById('breatheCircle');
+      var label = document.getElementById('breatheLabel');
+      var phases = [ { name: b.inhale, cls: 'grow', time: 4000, say: b.inhale }, { name: b.hold, cls: 'grow', time: 4000, say: null }, { name: b.exhale, cls: 'shrink', time: 6000, say: b.exhale } ];
+      var i = 0;
+      function step(){
+        if(i >= phases.length){
+          label.textContent = b.done;
+          speak(b.done);
+          chatHistory.push({ who: 'bot', text: b.log, ts: Date.now() });
+          persistAll();
+          return;
+        }
+        var p = phases[i];
+        label.textContent = p.name;
+        circle.className = 'breathe-circle ' + p.cls;
+        if(p.say) speak(p.say);
+        setTimeout(function(){ i++; step(); }, p.time);
+      }
+      step();
+    }, 500);
+  }
+
+  // ---------------- mood data + rendering ----------------
+  var MOODS = [
+    { key: 'great', score: 5, color: '#6B9E75' },
+    { key: 'good', score: 4, color: '#8FA490' },
+    { key: 'okay', score: 3, color: '#B8842E' },
+    { key: 'low', score: 2, color: '#C98A3E' },
+    { key: 'struggling', score: 1, color: '#B85C3E' }
+  ];
+  function moodLabel(key){ return tr('moodLabels')[key] || key; }
+
+  function hasCheckedInToday(){ return moods.some(function(m){ return m.date === todayStr() && m.source === 'checkin'; }); }
+
+  function logMood(moodKey, source){
+    var mood = MOODS.find(function(m){ return m.key === moodKey; });
+    if(!mood) return;
+    var date = todayStr();
+    if(source === 'checkin'){
+      var existingIdx = moods.findIndex(function(m){ return m.date === date && m.source === 'checkin'; });
+      var entry = { id: uid(), date: date, time: Date.now(), key: mood.key, score: mood.score, source: source };
+      if(existingIdx >= 0) moods[existingIdx] = entry; else moods.push(entry);
+    } else {
+      var alreadyToday = moods.some(function(m){ return m.date === date; });
+      if(alreadyToday) return;
+      moods.push({ id: uid(), date: date, time: Date.now(), key: mood.key, score: mood.score, source: source });
+    }
+    profile.lastMood = mood.key;
+    profile.lastMoodDate = date;
+    persistAll();
+  }
+
+  function followUpForScore(score){
+    if(LANG === 'hi'){
+      if(score <= 2) return "Sach batane ke liye shukriya. Aise dino mein, khud ke liye ek chhoti si acchi cheez bhi matter karti hai — breathing exercise try karna chahoge, ya Journal mein likhna chahoge?";
+      if(score === 3) return "Steady rehna bhi theek hai. Kuch discuss karna hai, ya abhi ke liye itna hi rehne dein?";
+      return "Sunke accha laga. Aaj kis cheez ne isme contribute kiya?";
+    }
+    if(score <= 2) return "Thanks for telling me honestly. On days like this, even one small kind thing toward yourself counts — want to try the breathing exercise, or write about it in your Journal?";
+    if(score === 3) return "Steady is a fine place to be. Anything you'd like to talk through, or shall we leave it there for now?";
+    return "Good to hear. What's one thing that's contributed to that today?";
+  }
+
+  function offerDailyCheckin(){
+    if(hasCheckedInToday()) return;
+    addTyping();
+    setTimeout(function(){
+      removeTyping();
+      var row = document.createElement('div');
+      row.className = 'row bot';
+      var bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      var html = tr('checkinNow') + '<div class="mood-options">';
+      MOODS.forEach(function(m){ html += '<button class="mood-btn" data-mood="' + m.key + '">' + moodLabel(m.key) + '</button>'; });
+      html += '</div>';
+      bubble.innerHTML = html;
+      row.appendChild(bubble);
+      chatWindow.appendChild(row);
+      scrollToBottom();
+      bubble.querySelectorAll('.mood-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          bubble.querySelectorAll('.mood-btn').forEach(function(b){ b.disabled = true; });
+          var moodKey = btn.dataset.mood;
+          bubble.querySelector('.mood-options').insertAdjacentHTML('afterend', '<div style="margin-top:8px;font-size:0.85rem;color:var(--ink-soft);">' + tr('checkedIn') + '<strong style="color:var(--ink);">' + moodLabel(moodKey) + '</strong></div>');
+          logMood(moodKey, 'checkin');
+          chatHistory.push({ who: 'bot', text: tr('checkedIn') + moodLabel(moodKey), ts: Date.now() });
+          persistAll();
+          var mood = MOODS.find(function(m){ return m.key === moodKey; });
+          botReply(followUpForScore(mood.score), 400);
+        });
+      });
+    }, 500);
+  }
+
+  function renderMoodTab(){
+    if(hasCheckedInToday()){
+      var todays = moods.filter(function(m){ return m.date === todayStr() && m.source === 'checkin'; }).pop();
+      checkinContent.innerHTML = '<p class="checkin-status">' + tr('loggedFor') + '<strong>' + moodLabel(todays.key) + '</strong></p><button class="link-btn" id="updateCheckinBtn">' + tr('updateCheckin') + '</button>';
+      document.getElementById('updateCheckinBtn').addEventListener('click', function(){ renderCheckinButtons(); });
+    } else {
+      renderCheckinButtons();
+    }
+    renderMoodChart();
+    renderMoodLog();
+  }
+
+  function renderCheckinButtons(){
+    var html = '<p class="checkin-status">' + tr('checkinNow') + '</p><div class="mood-options">';
+    MOODS.forEach(function(m){ html += '<button class="mood-btn" data-mood="' + m.key + '">' + moodLabel(m.key) + '</button>'; });
+    html += '</div>';
+    checkinContent.innerHTML = html;
+    checkinContent.querySelectorAll('.mood-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){ logMood(btn.dataset.mood, 'checkin'); renderMoodTab(); });
+    });
+  }
+
+  function renderMoodChart(){
+    var days = [];
+    for(var i = 13; i >= 0; i--){
+      var d = new Date(); d.setDate(d.getDate() - i);
+      var key = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+      var entry = moods.filter(function(m){ return m.date === key; }).pop();
+      days.push({ date: key, label: (d.getMonth()+1) + '/' + d.getDate(), score: entry ? entry.score : null, color: entry ? MOODS.find(function(m){return m.key===entry.key;}).color : null });
+    }
+    var hasAny = days.some(function(d){ return d.score !== null; });
+    moodChartEmpty.textContent = hasAny ? '' : tr('chartEmpty');
+    var w = 320, h = 130, chartH = h - 22 - 8;
+    var barW = (w / days.length) - 6;
+    var svgParts = [];
+    days.forEach(function(d, idx){
+      var x = idx * (w / days.length) + 3;
+      if(d.score !== null){
+        var barH = (d.score / 5) * chartH;
+        var y = chartH - barH + 8;
+        svgParts.push('<rect x="' + x + '" y="' + y + '" width="' + barW + '" height="' + barH + '" rx="3" fill="' + d.color + '"></rect>');
+      } else {
+        svgParts.push('<rect x="' + x + '" y="' + (chartH + 6) + '" width="' + barW + '" height="2" rx="1" fill="var(--line)"></rect>');
+      }
+      if(idx % 3 === 0){ svgParts.push('<text x="' + (x + barW/2) + '" y="' + (h - 4) + '" font-size="8" text-anchor="middle" fill="var(--ink-soft)">' + d.label + '</text>'); }
+    });
+    moodChart.innerHTML = svgParts.join('');
+  }
+
+  function renderMoodLog(){
+    if(moods.length === 0){ moodLogEl.innerHTML = '<p class="empty-note">' + tr('noEntries') + '</p>'; return; }
+    var recent = moods.slice().reverse().slice(0, 20);
+    moodLogEl.innerHTML = recent.map(function(m){
+      var d = new Date(m.time);
+      var dateStr = d.toLocaleDateString() + ' · ' + d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+      return '<div class="mood-log-item"><span class="mood-log-date">' + dateStr + (m.source === 'inferred' ? (LANG==='hi' ? ' (chat se)' : ' (from chat)') : '') + '</span><span>' + moodLabel(m.key) + '</span></div>';
+    }).join('');
+  }
+
+  // ---------------- journal ----------------
+  journalSaveBtn.addEventListener('click', function(){
+    var text = journalInput.value.trim();
+    if(!text) return;
+    journal.push({ id: uid(), date: todayStr(), ts: Date.now(), text: text });
+    journalInput.value = '';
+    persistAll();
+    renderJournalTab();
+  });
+
+  function renderJournalTab(){
+    if(journal.length === 0){ journalList.innerHTML = ''; return; }
+    var recent = journal.slice().reverse();
+    journalList.innerHTML = recent.map(function(entry){
+      var d = new Date(entry.ts);
+      var dateStr = d.toLocaleDateString() + ' · ' + d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+      return '<div class="journal-item" data-id="' + entry.id + '"><div class="journal-item-head"><span class="journal-item-date">' + dateStr + '</span><button class="journal-remove" data-remove="' + entry.id + '">' + tr('journalRemove') + '</button></div><div class="journal-item-text"></div></div>';
+    }).join('');
+    journalList.querySelectorAll('.journal-item').forEach(function(el){
+      var id = el.dataset.id;
+      var entry = journal.find(function(j){ return j.id === id; });
+      el.querySelector('.journal-item-text').textContent = entry.text;
+    });
+    journalList.querySelectorAll('[data-remove]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        journal = journal.filter(function(j){ return j.id !== btn.dataset.remove; });
+        persistAll();
+        renderJournalTab();
+      });
+    });
+  }
+
+  // ---------------- history tab ----------------
+  function formatDateHeading(ts){
+    var d = new Date(ts);
+    return d.toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' });
+  }
+  function renderHistoryTab(){
+    var query = (historySearch.value || '').trim().toLowerCase();
+    var filtered = query ? chatHistory.filter(function(m){ return m.text.toLowerCase().indexOf(query) !== -1; }) : chatHistory;
+    if(filtered.length === 0){ historyList.innerHTML = '<p class="empty-note">' + tr('noEntries') + '</p>'; return; }
+    var groups = [];
+    var currentKey = null, currentGroup = null;
+    filtered.forEach(function(m){
+      var dayKey = new Date(m.ts).toDateString();
+      if(dayKey !== currentKey){ currentKey = dayKey; currentGroup = { heading: formatDateHeading(m.ts), items: [] }; groups.push(currentGroup); }
+      currentGroup.items.push(m);
+    });
+    var html = '';
+    groups.forEach(function(g){
+      html += '<div class="history-date-heading">' + g.heading + '</div>';
+      g.items.forEach(function(m){
+        var timeStr = new Date(m.ts).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+        var whoLabel = m.who === 'user' ? tr('historyYou') : tr('historyBot');
+        html += '<div class="history-row"><span class="history-who">' + whoLabel + '</span><span class="history-text"></span><span class="history-time">' + timeStr + '</span></div>';
+      });
+    });
+    historyList.innerHTML = html;
+    // fill text via textContent to avoid injection
+    var flatItems = [];
+    groups.forEach(function(g){ g.items.forEach(function(m){ flatItems.push(m); }); });
+    historyList.querySelectorAll('.history-text').forEach(function(el, idx){ el.textContent = flatItems[idx].text; });
+  }
+  historySearch.addEventListener('input', renderHistoryTab);
+  clearHistoryBtn2.addEventListener('click', function(){
+    showConfirm(tr('clearConfirmTitle'), tr('clearConfirmMsg'), function(){ doClearChat(); renderHistoryTab(); });
+  });
+
+  // ---------------- smart rule engine ----------------
+  var NAME_STOPWORDS = ['feeling','fine','okay','ok','good','great','sad','tired','stressed','anxious','not','doing','gonna','going','trying','sorry','sure','here','ready','done','back','so','very','really','just','still','a','the','alright','well','hai','ho','bhai','yaar','accha','theek','sach','bas','naam','bulao','mera','mujhe','kya','kaise','kaisa'];
+
+  function tryCaptureName(text){
+    var patterns = [
+      /\b(?:my name is|call me|i am|i'm)\s+([a-zA-Z]{2,20})\b/i,
+      /\bmera naam\s+([a-zA-Z]{2,20})\b/i,
+      /\bmujhe\s+([a-zA-Z]{2,20})\s+bulao\b/i
+    ];
+    var candidate = null;
+    for(var i = 0; i < patterns.length; i++){ var m = text.match(patterns[i]); if(m){ candidate = m[1]; break; } }
+    if(!candidate) return false;
+    if(NAME_STOPWORDS.indexOf(candidate.toLowerCase()) !== -1) return false;
+    var name = candidate.charAt(0).toUpperCase() + candidate.slice(1).toLowerCase();
+    var isNew = profile.name !== name;
+    var wasKnown = !!profile.name;
+    profile.name = name;
+    persistAll();
+    if(isNew){
+      if(LANG === 'hi') botReply(wasKnown ? ("Theek hai, ab se main aapko " + name + " bulaunga.") : ("Aapse milkar accha laga, " + name + ". Yaad rakh liya."), 450);
+      else botReply(wasKnown ? ("Got it, I'll call you " + name + " from now on.") : ("Nice to meet you, " + name + ". I'll remember that."), 450);
+    }
+    return true;
+  }
+
+  var RULES = [
+    { key: 'breathing', test: /\b(breath|breathing|saans)\b/i, handler: function(){ runBreathingExercise(); } },
+    { key: 'identity', test: /\b(what('?s| is) my name|do you remember me|who am i|mera naam kya hai|mujhe yaad ho)\b/i,
+      handler: function(){ botReply(profile.name ? (LANG==='hi' ? ("Aap " + profile.name + " ho — mujhe yaad hai.") : ("You're " + profile.name + " — I remember.")) : (LANG==='hi' ? "Aapne abhi tak apna naam nahi bataya — kabhi bhi bata sakte ho." : "You haven't told me your name yet — feel free to share it anytime."), 400); } },
+    { key: 'mood_history', test: /\b(how (was|have) i (been|doing)|my mood (lately|history)|kaisa (raha|chal raha))\b/i,
+      handler: function(){ botReply(moodSummary(), 500); } },
+    { key: 'greeting', test: /\b(hi|hello|hey|good morning|good evening|namaste)\b/i,
+      tips: [ { en:"Hi there. How are you doing today — really?", hi:"Hey, aaj sach mein kaisa chal raha hai?" } ] },
+    { key: 'thanks', test: /\b(thank you|thanks|thank u|shukriya|dhanyavaad)\b/i,
+      tips: [ { en:"You're welcome. I'm glad to sit with you through this — feel free to check in anytime.", hi:"Koi baat nahi. Main yahin hoon jab bhi zarurat ho — kabhi bhi check-in karna." } ] },
+    { key: 'sad', moodInfer: 'low', test: /\b(sad|down|depress|low|hopeless|empty|udaas|dukhi|dukh|niraash)\b/i,
+      tips: [
+        { en:"That sounds heavy to carry. You don't have to explain it perfectly — I'm listening. What's been the hardest part of today?", hi:"Yeh sunke lagta hai bhaari lag raha hai. Sab kuch perfectly explain karne ki zarurat nahi — main sun raha hoon. Aaj sabse mushkil part kya tha?" },
+        { en:"It's alright to not be alright. Sometimes just naming it, even to yourself, takes a little of the pressure off. Want to write it out in your Journal?", hi:"Theek nahi feel karna bhi theek hai. Kabhi kabhi bas naam dena, khud ko bhi, thoda pressure kam kar deta hai. Journal mein likhna chahoge?" },
+        { en:"I hear you. Is this feeling tied to something specific, or more of a general weight today?", hi:"Samajh sakta hoon. Yeh feeling kisi specific cheez se judi hai, ya aaj overall aisa hi lag raha hai?" }
+      ] },
+    { key: 'stress', moodInfer: 'low', test: /\b(anxious|anxiety|worried|panic|overwhelm|stressed|stress|tension|pareshan|chinta|ghabrahat)\b/i,
+      tips: [
+        { en:"It makes sense that you'd feel stretched thin. Say 'breathing exercise' and I'll walk through one with you. What's the biggest thing on your mind right now?", hi:"Samajh sakta hoon ki itna kuch ek saath handle karna thaka dene wala hai. 'breathing exercise' bolo, main saath mein karwata hoon. Abhi sabse zyada kis cheez ki tension hai?" },
+        { en:"When everything feels urgent at once, picking just one small piece to handle first can help. What's one thing you could set aside for later?", hi:"Jab sab kuch ek saath urgent lagne lage, ek chhoti si cheez choose karke pehle woh karna help karta hai. Kaunsi cheez thodi der ke liye rok sakte ho?" },
+        { en:"Your body often calms before your thoughts do — a few slow breaths can help both. Want to try one together?", hi:"Aapka body aksar dimaag se pehle calm ho jaata hai. Kuch slow breaths try karein saath mein?" }
+      ] },
+    { key: 'sleep', test: /\b(tired|exhausted|can'?t sleep|insomnia|sleep|neend|thaka|thakan)\b/i,
+      tips: [
+        { en:"Rest matters more than most schedules give it credit for. A consistent wake-up time, dimming screens an hour before bed, and a slightly cool room all genuinely help.", hi:"Neend ka schedule jitna log samajhte hain usse zyada matter karta hai. Ek consistent wake-up time, sone se ek ghanta pehle screens dim karna, aur thoda cool room — yeh sab genuinely help karte hain." },
+        { en:"If your mind races at night, try writing tomorrow's to-do list before you lie down — it gets the loose threads out of your head.", hi:"Agar raat ko dimaag race karta hai, to sone se pehle kal ka to-do list likh lo — loose threads dimaag se bahar nikal jaate hain." },
+        { en:"A short walk earlier in the day can improve sleep quality more than people expect. Have you been getting outside much?", hi:"Din mein thodi si walk neend ki quality expected se zyada improve kar sakti hai. Bahar jaana ho raha hai recently?" }
+      ] },
+    { key: 'happy', moodInfer: 'great', test: /\b(happy|great|good|excited|proud|khush|badhiya)\b/i,
+      tips: [ { en:"That's genuinely good to hear. What's contributed to that — I'd like to know what's working.", hi:"Yeh genuinely accha lagta hai sunke. Kya cheez contribute kar rahi hai isme — jaanna chahunga kya kaam kar raha hai." } ] },
+    { key: 'gratitude', moodInfer: 'good', test: /\b(grateful|gratitude|thankful|shukar)\b/i,
+      tips: [
+        { en:"Here's a small prompt: think of one thing today that went slightly better than expected, even something tiny. What comes to mind?", hi:"Ek chhota sa prompt: aaj kuch aisa socho jo thoda better hua expected se, chahe kitna bhi chhota ho. Kya yaad aata hai?" },
+        { en:"Try naming one person who made today a little easier, even in a small way. Who was it?", hi:"Ek insaan ka naam socho jisne aaj thoda aasan banaya, chahe chhoti si baat mein. Kaun tha?" }
+      ] },
+    { key: 'motivation', test: /\b(motivat|lazy|procrastinat|unmotivated|aalas|susti)\b/i,
+      tips: [
+        { en:"Motivation is unreliable — it tends to show up after you start, not before. Pick the smallest possible version of the task and just do that piece. What's the task you're avoiding?", hi:"Motivation unreliable hota hai — usually start karne ke baad aata hai, pehle nahi. Task ka sabse chhota version choose karo aur bas woh piece karo. Kaunsa task avoid kar rahe ho?" },
+        { en:"Try a 2-minute rule: commit to just 2 minutes of the task. Often the hardest part is only the start.", hi:"2-minute rule try karo: bas 2 minute commit karo task ke liye. Aksar sabse mushkil part sirf shuru karna hota hai." }
+      ] },
+    { key: 'water', test: /\b(water|hydrat|dehydrat|paani)\b/i,
+      tips: [ { en:"A practical marker: if you're thirsty, you're already a little behind. Keeping a filled glass nearby helps more than remembering to walk and get one.", hi:"Ek practical marker: agar pyaas lag rahi hai, to already thoda peeche ho. Glass bharke paas rakhna help karta hai, uthke laane ko yaad rakhne se zyada." } ] },
+    { key: 'exercise', test: /\b(exercise|workout|gym|walk|active|kasrat)\b/i,
+      tips: [ { en:"You don't need a full workout to get a real benefit — a brisk 10-minute walk measurably lifts mood and energy.", hi:"Poora workout zaroori nahi real benefit ke liye — ek brisk 10-minute walk mood aur energy measurably badha deti hai." } ] },
+    { key: 'nutrition', test: /\b(eat|diet|nutrition|food|hungry|khana|bhookh)\b/i,
+      tips: [ { en:"Simple and sustainable beats strict: aim for a plate that's roughly half vegetables or fruit, a palm-sized portion of protein, and whatever else you enjoy.", hi:"Simple aur sustainable strict se better hota hai: plate ka roughly half vegetables ya fruit rakho, palm-size protein, aur jo bhi enjoy karte ho baaki." } ] },
+    { key: 'lonely', moodInfer: 'low', test: /\b(lonely|alone|isolat|akela|tanha)\b/i,
+      tips: [ { en:"Loneliness is one of the harder feelings to sit with. Is there one person — even a passing acquaintance — you could send a low-stakes message to today?", hi:"Akelapan un feelings mein se hai jinke saath baithna mushkil hota hai. Koi ek insaan hai — chahe koi casual jaan-pehchaan wala — jisko aaj ek low-stakes message bhej sakte ho?" } ] },
+    { key: 'headache', test: /\b(headache|migraine|sar dard|sirdard)\b/i,
+      tips: [
+        { en:"I can't tell you what's causing it, but occasional headaches are often linked to dehydration, poor sleep, screen strain, or stress — water, rest, and a short break from screens sometimes help. If it's severe, sudden, or keeps coming back, it's worth getting checked by a general physician or a neurologist.", hi:"Main yeh nahi bata sakta ki wajah kya hai, lekin occasional headaches aksar dehydration, kam neend, screen strain, ya stress se juda hota hai — paani, rest, aur screens se thoda break kabhi kabhi help karta hai. Agar yeh severe hai, achanak aaya hai, ya baar baar ho raha hai, to ek general physician ya neurologist se check karwana theek rahega." }
+      ] },
+    { key: 'fever_cold', test: /\b(fever|cold|flu|cough|sore throat|bukhar|khansi|zukam)\b/i,
+      tips: [
+        { en:"I'm not able to diagnose this, but fevers, colds, and coughs are usually best supported with rest, fluids, and monitoring your temperature. If it's high, lasts more than a couple of days, or comes with breathing trouble, please see a general physician soon.", hi:"Main isse diagnose nahi kar sakta, lekin fever, cold, aur khansi mein usually rest, fluids, aur temperature monitor karna help karta hai. Agar bukhar tez hai, do-teen din se zyada chal raha hai, ya saans lene mein dikkat ho rahi hai, to please jaldi ek general physician se milo." }
+      ] },
+    { key: 'stomach', test: /\b(stomach ache|stomach pain|nausea|vomit|diarrh|indigestion|acidity|pet dard|ulti|badhazmi)\b/i,
+      tips: [
+        { en:"I can't diagnose this, but mild stomach discomfort sometimes eases with smaller, simpler meals and staying hydrated. If the pain is severe, persistent, or paired with fever or vomiting, a general physician or gastroenterologist should take a look.", hi:"Main isse diagnose nahi kar sakta, lekin mild stomach discomfort mein chhote, simple meals aur hydration se kabhi kabhi aaram milta hai. Agar dard severe hai, chal raha hai, ya fever/vomiting ke saath hai, to ek general physician ya gastroenterologist ko dikhao." }
+      ] },
+    { key: 'chest_pain', test: /\b(chest pain|chest tightness|seene mein dard)\b/i,
+      tips: [
+        { en:"Chest pain isn't something I can assess, and it can sometimes be serious. If it's severe, sudden, or comes with shortness of breath, sweating, or pain spreading to your arm or jaw, please treat it as an emergency and get medical help right away. Otherwise, a doctor — ideally a cardiologist — should evaluate it soon.", hi:"Chest pain kuch aisa hai jise main assess nahi kar sakta, aur kabhi kabhi yeh serious ho sakta hai. Agar yeh severe hai, achanak hai, ya saath mein saans phoolna, paseena, ya arm/jaw mein dard hai, to please ise emergency samjho aur turant medical help lo. Warna, ek doctor — ideally cardiologist — se jaldi check karwao." }
+      ] },
+    { key: 'skin', test: /\b(rash|itch|acne|skin problem|khujli|daane)\b/i,
+      tips: [
+        { en:"I can't diagnose skin issues, but keeping the area clean, avoiding harsh products, and not scratching can help in the meantime. If it spreads, doesn't improve, or is painful, a dermatologist is the right person to see.", hi:"Main skin issues diagnose nahi kar sakta, lekin area ko clean rakhna, harsh products avoid karna, aur khujlana na, isse thoda help mil sakta hai abhi ke liye. Agar yeh failta hai, theek nahi hota, ya painful hai, to ek dermatologist ko dikhana sahi rahega." }
+      ] },
+    { key: 'body_pain', test: /\b(back pain|joint pain|body pain|muscle pain|kamar dard|jodo mein dard)\b/i,
+      tips: [
+        { en:"I'm not able to diagnose this, but gentle stretching, good posture, and rest from the aggravating activity often help mild aches. If the pain is intense, doesn't improve, or affects movement, an orthopedist or general physician can properly assess it.", hi:"Main isse diagnose nahi kar sakta, lekin halka stretching, sahi posture, aur us activity se rest lena jo dard badhata hai, mild aches mein aksar help karta hai. Agar dard intense hai, theek nahi hota, ya movement affect kar raha hai, to ek orthopedist ya general physician isko properly assess kar sakte hain." }
+      ] },
+    { key: 'see_doctor', test: /\b(should i see a doctor|need a doctor|which doctor|kaunsa doctor|doctor ko dikhau)\b/i,
+      tips: [
+        { en:"I can't diagnose or replace a medical visit, but as a general rule: for everyday symptoms, a general physician is a good first stop, and they can refer you to a specialist if needed. If anything feels severe, sudden, or is getting worse quickly, please don't wait — seek care promptly.", hi:"Main diagnose nahi kar sakta ya medical visit replace nahi kar sakta, lekin general rule yeh hai: everyday symptoms ke liye ek general physician acha first stop hota hai, aur zarurat pade to woh specialist ke paas refer kar sakte hain. Agar kuch bhi severe, achanak, ya jaldi worsen ho raha lage, to please wait mat karo — jaldi care lo." }
+      ] }
+  ];
+
+  var FALLBACKS = [
+    { en:"Tell me a bit more about what's going on — I'm here for it.", hi:"Thoda aur bata do kya chal raha hai — main sun raha hoon." },
+    { en:"I want to understand better — can you say more about that?", hi:"Samajhna chahta hoon behtar — thoda aur bata sakte ho?" },
+    { en:"That's worth talking through. What's been on your mind about it?", hi:"Yeh baat karne layak hai. Isse related dimaag mein kya chal raha hai?" }
+  ];
+
+  var lastCategory = null;
+
+  function moodSummary(){
+    if(moods.length === 0) return LANG === 'hi' ? "Abhi tak humne koi mood log nahi kiya — Mood Tracker tab try karo, ya bas bata do kaisa feel ho raha hai, main note kar lunga." : "We haven't logged any moods yet — try the Mood Tracker tab, or just tell me how you're feeling and I'll note it.";
+    var recent = moods.slice(-7);
+    var latest = moods[moods.length - 1];
+    var trendWord = LANG === 'hi' ? 'steady' : 'steady';
+    if(recent.length >= 4){
+      var firstHalf = recent.slice(0, Math.floor(recent.length/2));
+      var secondHalf = recent.slice(Math.floor(recent.length/2));
+      var a1 = firstHalf.reduce(function(s,m){return s+m.score;},0)/firstHalf.length;
+      var a2 = secondHalf.reduce(function(s,m){return s+m.score;},0)/secondHalf.length;
+      if(a2 - a1 > 0.4) trendWord = LANG === 'hi' ? 'upar ki taraf' : 'trending upward';
+      else if(a1 - a2 > 0.4) trendWord = LANG === 'hi' ? 'neeche ki taraf' : 'trending downward';
+    }
+    var latestLabel = moodLabel(latest.key);
+    if(LANG === 'hi') return "Aapka sabse recent check-in tha '" + latestLabel + "'. Pichhle " + recent.length + " entries dekhein to, overall trend " + trendWord + " raha hai.";
+    return "Your most recent check-in was '" + latestLabel + "'. Looking at your last " + recent.length + " entries, things have been " + trendWord + " overall.";
+  }
+
+  function handleFollowUpRequest(text){
+    if(!lastCategory) return false;
+    if(!/\b(another|more|else|different tip|anything else|another one|aur ek|kuch aur)\b/i.test(text)) return false;
+    var rule = RULES.find(function(r){ return r.key === lastCategory; });
+    if(!rule || !rule.tips) return false;
+    var idx = (tipIdx[lastCategory] || 0) + 1;
+    if(idx >= rule.tips.length) idx = 0;
+    tipIdx[lastCategory] = idx;
+    persistAll();
+    botReply(rule.tips[idx][LANG], 500);
+    return true;
+  }
+
+  // ---------------- AI layer (talks to our local backend, which holds the Groq key) ----------------
+  var BACKEND_CHAT_ENDPOINT = '/api/chat';
+  var BACKEND_HEALTH_ENDPOINT = '/api/health';
+  var GROQ_MODEL = safeStorageGet('ek_groq_model', '') || '';
+
+  function openSettingsModal(){
+    groqModelInput.value = GROQ_MODEL;
+    settingsStatus.style.color = 'var(--ink-soft)';
+    settingsStatus.textContent = LANG === 'hi' ? 'Server status check kar rahe hain…' : 'Checking server status…';
+    settingsModal.classList.add('open');
+    checkServerStatus();
+  }
+  function checkServerStatus(){
+    fetch(BACKEND_HEALTH_ENDPOINT).then(function(res){ return res.json(); }).then(function(data){
+      if(data && data.aiConfigured){
+        settingsStatus.style.color = 'var(--sage)';
+        settingsStatus.textContent = (LANG === 'hi' ? 'Server chal raha hai aur AI replies ON hain (default model: ' : 'Server is running and AI replies are ON (default model: ') + data.defaultModel + ').';
+      } else {
+        settingsStatus.style.color = 'var(--gold)';
+        settingsStatus.textContent = LANG === 'hi' ? 'Server chal raha hai lekin GROQ_API_KEY set nahi hai — abhi offline replies use ho rahe hain.' : 'Server is running but GROQ_API_KEY isn\'t set — using offline replies for now.';
+      }
+    }).catch(function(){
+      settingsStatus.style.color = 'var(--rust)';
+      settingsStatus.textContent = LANG === 'hi' ? "Local server tak nahi pahunch paya — 'npm start' chala ke check karo. Abhi offline replies use ho rahe hain." : "Couldn't reach the local server — make sure you ran 'npm start'. Using offline replies for now.";
+    });
+  }
+  safeInit('settings modal', function(){
+    settingsBtn.addEventListener('click', openSettingsModal);
+    settingsCloseBtn.addEventListener('click', function(){ settingsModal.classList.remove('open'); });
+    settingsModal.addEventListener('click', function(e){ if(e.target === settingsModal) settingsModal.classList.remove('open'); });
+    settingsCheckBtn.addEventListener('click', checkServerStatus);
+    settingsSaveBtn.addEventListener('click', function(){
+      var model = groqModelInput.value.trim();
+      GROQ_MODEL = model;
+      safeStorageSet('ek_groq_model', model);
+      settingsStatus.style.color = 'var(--sage)';
+      settingsStatus.textContent = LANG === 'hi' ? 'Saved.' : 'Saved.';
+    });
+  });
+
+  function buildSystemPrompt(){
+    var langLine = LANG === 'hi'
+      ? "Respond in casual Hinglish (Hindi written in Latin script, mixed naturally with English), matching the user's tone."
+      : "Respond in English.";
+    var nameLine = profile.name ? ("The user's name is " + profile.name + " — use it warmly, but don't overuse it.") : "The user hasn't shared their name yet; you may ask for it in a low-pressure way if it comes up naturally.";
+    return [
+      "You are HealthFit24x7, a respectful, empathetic wellbeing companion chatbot inside a self-care app.",
+      "Greet users warmly and keep a caring, non-clinical, conversational tone throughout.",
+      "Give clear, properly formatted answers: keep paragraphs short, and use line breaks or short bullet points (using '-' or numbers) when listing multiple ideas or steps, instead of one dense block of text.",
+      "You can offer general wellbeing and health education (sleep, stress, movement, nutrition, emotional regulation) but you must NEVER diagnose a medical or mental health condition, name a specific illness the user 'has', or recommend medications, dosages, or supplements.",
+      "If the user describes physical symptoms, briefly share general self-care information without diagnosing, and suggest the appropriate type of doctor to see (for example: general physician, dermatologist, cardiologist, gastroenterologist, neurologist, orthopedist, ENT) so they can get a proper evaluation. If symptoms sound severe or urgent (e.g. chest pain, difficulty breathing), clearly say this needs prompt or emergency medical attention.",
+      "When the user seems sad, stressed, anxious, unmotivated, or low, respond with warmth and practical, concrete, doable suggestions rather than generic platitudes, and ask a gentle follow-up question when it fits.",
+      "Naturally remind users, without repeating a canned disclaimer every message, that you are not a substitute for professional medical or mental health care.",
+      "If the user expresses thoughts of suicide, self-harm, hopelessness about being alive, or being in crisis, immediately prioritize their safety above everything else: respond seriously and compassionately, urge them to contact a crisis line or emergency services right away if they're in immediate danger, and encourage reaching out to someone they trust. Do not continue with unrelated tips in that moment, and do not attempt to talk them out of their feelings yourself.",
+      "Keep most replies fairly short — a few sentences or a short list — like a real conversation, not an essay.",
+      langLine,
+      nameLine
+    ].join(" ");
+  }
+
+  function callBackendAPI(userText, onSuccess, onError){
+    var recent = chatHistory.slice(-16).map(function(m){
+      return { role: m.who === 'user' ? 'user' : 'assistant', content: m.text };
+    });
+    var messages = [{ role: 'system', content: buildSystemPrompt() }].concat(recent, [{ role: 'user', content: userText }]);
+    fetch(BACKEND_CHAT_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: messages, model: GROQ_MODEL || undefined })
+    }).then(function(res){
+      return res.json().then(function(data){ return { ok: res.ok, data: data }; });
+    }).then(function(result){
+      if(!result.ok) throw new Error((result.data && result.data.error) || 'Backend error');
+      var content = result.data && result.data.reply;
+      if(!content) throw new Error('Empty response from backend');
+      onSuccess(content.trim());
+    }).catch(function(err){
+      console.error('[HealthFit24x7] Backend API call failed:', err);
+      onError(err);
+    });
+  }
+
+  var CRISIS_PATTERNS = /\b(suicide|suicidal|kill myself|end my life|ending it all|self.?harm|hurt myself|want to die|no reason to live|khudkushi|marna chahta hoon|marna chahti hoon|jeena nahi chahta|jeena nahi chahti|zindagi khatam)\b/i;
+
+
+  function crisisMessage(){
+    if(LANG === 'hi'){
+      return "Aapne yeh mujhe bataya, iske liye shukriya — main ise seriously le raha hoon. Main abhi jitni support chahiye woh nahi de sakta, lekin please kisi aise insaan se baat karo jo kar sake — crisis line, koi trusted person, ya agar aap immediate danger mein ho to emergency services.\n\n• US & Canada: 988 (Suicide & Crisis Lifeline)\n• UK & Ireland: Samaritans, 116 123\n• India: Vandrevala Foundation, 1860-2662-345\n• Kahin aur ho to: findahelpline.com par local lines mil jayengi\n\nAap matter karte ho, aur aapko is waqt akela nahi rehna hai.";
+    }
+    return "I'm really glad you told me this, and I want to take it seriously. I'm not able to provide the kind of support you need right now, but please reach out to someone who can — a crisis line, a trusted person, or emergency services if you're in immediate danger.\n\n• US & Canada: 988 (Suicide & Crisis Lifeline)\n• UK & Ireland: Samaritans, 116 123\n• India: Vandrevala Foundation, 1860-2662-345\n• Elsewhere: findahelpline.com lists local lines\n\nYou matter, and you don't have to go through this moment alone.";
+  }
+  function crisisSpoken(){
+    return LANG === 'hi'
+      ? "Aapne yeh bataya iske liye shukriya. Please abhi kisi crisis line ya trusted insaan se baat karo, ya agar immediate danger mein ho to emergency services ko call karo. Aap akele nahi ho."
+      : "I'm really glad you told me this. Please reach out to a crisis line or someone you trust right now, or emergency services if you're in immediate danger. You don't have to go through this alone.";
+  }
+
+  function ruleBasedReply(text){
+    for(var i = 0; i < RULES.length; i++){
+      var rule = RULES[i];
+      if(rule.test.test(text)){
+        lastCategory = rule.key;
+        if(rule.moodInfer && !moods.some(function(m){ return m.date === todayStr(); })){
+          logMood(rule.moodInfer, 'inferred');
+          if(!profile.hasExplainedInference){ profile.hasExplainedInference = true; persistAll(); }
+        }
+        if(rule.handler){ rule.handler(); return; }
+        var idx = tipIdx[rule.key] || 0;
+        if(idx >= rule.tips.length) idx = 0;
+        botReply(rule.tips[idx][LANG], 500);
+        return;
+      }
+    }
+    var fallback = FALLBACKS[Math.floor(Math.random() * FALLBACKS.length)];
+    botReply(fallback[LANG], 500);
+  }
+
+  function handleUserMessage(raw){
+    var text = raw.trim();
+    if(!text) return;
+    addBubble(text, 'user');
+    textInput.value = '';
+
+    if(CRISIS_PATTERNS.test(text)){
+      addTyping();
+      setTimeout(function(){
+        removeTyping();
+        addBubble(crisisMessage(), 'bot', { crisis: true });
+        speak(crisisSpoken());
+      }, 500);
+      return;
+    }
+
+    if(tryCaptureName(text)) return;
+    if(handleFollowUpRequest(text)) return;
+
+    // App-triggering rules (breathing exercise, identity, mood history) always
+    // run locally first, since they depend on this app's own state/UI.
+    var localRule = RULES.find(function(r){ return r.handler && r.test.test(text); });
+    if(localRule){
+      lastCategory = localRule.key;
+      localRule.handler();
+      return;
+    }
+
+    addTyping();
+    callBackendAPI(text, function(reply){
+      removeTyping();
+      addBubble(reply, 'bot');
+      speak(reply);
+    }, function(){
+      removeTyping();
+      ruleBasedReply(text);
+    });
+  }
+
+  safeInit('send button', function(){
+    sendBtn.addEventListener('click', function(){ handleUserMessage(textInput.value); });
+    textInput.addEventListener('keydown', function(e){ if(e.key === 'Enter') handleUserMessage(textInput.value); });
+  });
+  safeInit('suggestion chips', function(){
+    chips.addEventListener('click', function(e){
+      var btn = e.target.closest('.chip');
+      if(btn) handleUserMessage(btn.dataset.msg);
+    });
+  });
+
+  function doClearChat(){
+    try{
+      chatHistory = [];
+      var conv = getActiveConversation();
+      if(conv) conv.title = null;
+      persistAll();
+      chatWindow.innerHTML = '';
+      greet(true);
+    } catch(err){
+      console.error('[HealthFit24x7] clearing conversation failed:', err);
+    }
+  }
+  safeInit('clear conversation button', function(){
+    clearChatBtn.addEventListener('click', function(){
+      showConfirm(tr('clearConfirmTitle'), tr('clearConfirmMsg'), doClearChat);
+    });
+  });
+
+  // ---------------- boot ----------------
+  function greet(forceIntro){
+    if(chatHistory.length === 0 || forceIntro){
+      var intro = LANG === 'hi'
+        ? "Hi, main yahin hoon. Yeh ek shaant jagah hai jahan aap apne feelings check kar sakte ho, stress discuss kar sakte ho, ya bas khud ka thoda khayal rakhne ka chhota sa nudge le sakte ho. Neeche type karo, mic dabao bolne ke liye, ya upar diye gaye suggestions try karo."
+        : "Hi, I'm here. This is a space to check in on how you're feeling, talk through stress, or just get a small nudge toward taking care of yourself. Type below, tap the mic to speak, or try one of the suggestions above.";
+      if(!profile.name){
+        var askName = LANG === 'hi' ? " Main aapko kis naam se bulaun, agar aap batana chahein?" : " What should I call you, if you'd like to share?";
+        botReply(intro + askName, 400);
+      } else {
+        var hiName = LANG === 'hi' ? ("Hi " + profile.name + ". ") : ("Hi " + profile.name + ". ");
+        botReply(hiName + intro, 400);
+      }
+    } else {
+      chatHistory.forEach(renderStoredBubble);
+      scrollToBottom();
+      var welcomeBack = profile.name ? (LANG === 'hi' ? ("Wapas aane par accha laga, " + profile.name + ".") : ("Welcome back, " + profile.name + ".")) : (LANG === 'hi' ? "Wapas aane par accha laga." : "Welcome back.");
+      if(profile.lastMood && profile.lastMoodDate !== todayStr()){
+        var lastMoodLabel = moodLabel(profile.lastMood);
+        welcomeBack += LANG === 'hi' ? (" Pichhli baar aapne " + lastMoodLabel + " feel kiya tha — ab kaisa hai?") : (" Last time you mentioned feeling " + lastMoodLabel.toLowerCase() + " — how are things now?");
+      }
+      botReply(welcomeBack, 400);
+    }
+    setTimeout(offerDailyCheckin, 1400);
+  }
+
+  refreshStaticText();
+  renderChips();
+  renderSidebar();
+  safeInit('secure-context notice', function(){
+    if(!isSecureCtx && location.protocol !== 'file:'){
+      fileWarning.style.display = 'block';
+      var onLocalNetwork = /^(\d{1,3}\.){3}\d{1,3}$/.test(location.hostname) || (location.hostname && location.hostname !== 'localhost' && location.hostname.indexOf('.') === -1);
+      fileWarning.textContent = LANG === 'hi'
+        ? ('Voice input band hai kyunki yeh page plain http:// par serve ho raha hai — browsers privacy ke liye isko sirf https://, ya localhost par allow karte hain, koi bhi website isko JavaScript se bypass nahi kar sakti. ' + (onLocalNetwork ? 'Isi computer par "http://localhost:<port>" try karo (secure maana jaata hai), ya doosre devices ke liye ngrok/Cloudflare Tunnel se ek https:// link banao, ya GitHub Pages/Netlify/Vercel par free https ke saath host karo.' : 'Ise https:// par host karo (GitHub Pages, Netlify, Vercel sab free https dete hain) — text chat is dauran pura kaam karta rahega.'))
+        : ('Voice input is disabled because this page is being served over plain http:// — browsers only allow the microphone on https://, or on localhost, for privacy reasons; no website can bypass this from JavaScript. ' + (onLocalNetwork ? 'On this computer, try "http://localhost:<port>" instead of an IP address (that\'s treated as secure). For other devices, use a tool like ngrok or Cloudflare Tunnel to get a temporary https:// link, or host it on GitHub Pages/Netlify/Vercel, which give free https automatically.' : 'Host it over https:// (GitHub Pages, Netlify, and Vercel all give free https) — text chat works fully in the meantime.'));
+    }
+  });
+  greet(false);
+})();
+</script>
+
+</body>
+</html>
